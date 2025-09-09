@@ -1,0 +1,97 @@
+/* ==========================
+   ページ全体
+========================== */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #f8f8f8;
+  color: #333;
+}
+
+/* ==========================
+   ヘッダー・フッター
+========================== */
+header, footer {
+  text-align: center;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ==========================
+   ギャラリー
+========================== */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 20px;
+  justify-items: center; /* アイテム中央寄せ */
+}
+
+.item {
+  max-width: 500px;
+}
+
+/* タブレット */
+@media (max-width: 900px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* スマホ */
+@media (max-width: 600px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================
+   アイテム画像
+========================== */
+.item img {
+  width: 100%;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.item img:hover {
+  transform: scale(1.05);
+}
+
+/* ==========================
+   モーダル
+========================== */
+.modal {
+  display: none; /* 初期は非表示 */
+  position: fixed;
+  z-index: 1000;
+  inset: 0; /* top, left, right, bottomを0に */
+  background-color: rgba(0,0,0,0.8);
+
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.active {
+  display: flex; /* 表示するときだけflex */
+}
+
+/* 拡大画像 */
+.modal-img {
+  max-width: 90%;
+  max-height: 90%;
+  /* border-radius: 8px; */
+  object-fit: contain;
+}
+
+/* 閉じるボタン */
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
