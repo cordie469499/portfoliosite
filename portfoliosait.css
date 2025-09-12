@@ -60,11 +60,15 @@ header, footer {
   transform: scale(1.05);
 }
 
+/* ==========================
+   動画プレビュー
+========================== */
 .item.video {
-  position: relative;
+  position: relative;     /* 子要素の基準 */
   width: 100%;
   max-width: 500px;
   cursor: pointer;
+  overflow: hidden;       /* はみ出し防止 */
 }
 
 .item.video img {
@@ -74,46 +78,22 @@ header, footer {
 
 .item.video .video-preview {
   position: absolute;
-  inset: 0;
-  display: none; /* 初期は非表示 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;          /* 初期は非表示 */
+  z-index: 2;             /* サムネイルより上 */
 }
 
 .item.video:hover .video-preview {
-  display: block; /* ホバー時だけ表示 */
+  display: block;         /* ホバー時に表示 */
 }
 
 .item.video .video-preview iframe {
   width: 100%;
   height: 100%;
-}
-
-.item.video {
-  position: relative; /* 子要素を絶対配置できるように */
-  width: 100%;
-  max-width: 500px;
-  cursor: pointer;
-  overflow: hidden; /* はみ出さないように */
-}
-
-.item.video img {
-  width: 100%;
-  display: block;
-}
-
-.item.video .video-preview {
-  position: absolute;
-  inset: 0;              /* 上下左右を0にして画像の上に重ねる */
-  display: none;         /* 初期は非表示 */
-  z-index: 2;            /* サムネイルより上に */
-}
-
-.item.video:hover .video-preview {
-  display: block;        /* ホバー時だけ表示 */
-}
-
-.item.video .video-preview iframe {
-  width: 100%;
-  height: 100%;
+  border: none;           /* 枠を消す */
 }
 
 /* ==========================
@@ -138,7 +118,6 @@ header, footer {
 .modal-img {
   max-width: 90%;
   max-height: 90%;
-  /* border-radius: 8px; */
   object-fit: contain;
 }
 
