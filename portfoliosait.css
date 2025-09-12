@@ -130,3 +130,9 @@ header, footer {
   color: white;
   cursor: pointer;
 }
+/* ==========================
+   空アイテム（ダミー）
+========================== */
+.item.empty {
+  visibility: hidden;  /* 見えないけどスペースは確保 */
+}
