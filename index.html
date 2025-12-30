@@ -23,7 +23,7 @@ a{text-decoration:none;color:inherit;}
 .nav a.active{color:#000;}
 
 .hero{display:flex;justify-content:center;margin:2.5mm 0;}
-.home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
+.home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;line-height:1.8;color:#000;white-space:pre-line;font-size:18px;}
 
 .portfolio-main{position:relative;display:flex;justify-content:center;margin:2.5mm auto;max-width:900px;}
 .portfolio-main img,.portfolio-main video{display:block;max-width:100%;height:auto;cursor:grab;}
@@ -41,7 +41,15 @@ main{padding-top:0;}
 #page-about .container,#page-contact .container{max-width:700px;margin:0 auto;padding:40px 20px;text-align:center;line-height:1.8;}
 #page-about p,#page-contact p{margin-bottom:16px;font-size:18px;}
 
-/* responsive text */
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;}
+.modal.show{display:flex;}
+.modal-content{max-width:90%;max-height:90%;}
+.modal-close{position:absolute;top:10px;right:10px;font-size:30px;cursor:pointer;color:#fff;z-index:101;}
+.modal-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;z-index:101;user-select:none;}
+.modal-arrow-left{left:20px;}
+.modal-arrow-right{right:20px;}
+
 @media (max-width:768px){
   .site-title{font-size:32px;margin:14px 0 12px;padding:0 16px;}
   .nav-wrap{padding:0 12px;}
@@ -52,19 +60,6 @@ main{padding-top:0;}
   .portfolio-thumbs img,.portfolio-thumbs video{height:64px;}
   .home-text{font-size:12px;}
 }
-
-@media (min-width:769px){
-  .home-text{font-size:18px;}
-}
-
-/* modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;}
-.modal.show{display:flex;}
-.modal-content{max-width:90%;max-height:90%;}
-.modal-close{position:absolute;top:10px;right:10px;font-size:30px;cursor:pointer;color:#fff;z-index:101;}
-.modal-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;z-index:101;user-select:none;}
-.modal-arrow-left{left:20px;}
-.modal-arrow-right{right:20px;}
 </style>
 </head>
 <body>
@@ -87,13 +82,12 @@ main{padding-top:0;}
  <!-- HOME -->
 <section class="page active" id="page-home">
   <section class="hero section">
-    <div id="homeVideoContainer">
-      <iframe id="homeVideo" width="100%" height="500"
-              src="https://www.youtube.com/embed/9W7SKpAJ6B0?autoplay=1&mute=0&controls=0&rel=0&playsinline=1"
-              frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+    <div id="homeVideoContainer" style="position:relative;width:100%;padding-top:56.25%;">
+      <div id="homeVideo" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>
     </div>
   </section>
-  <section class="home-text">[原風景]
+  <section class="home-text">
+[原風景]
 
 喧騒の中で日々を消費されている時、
 ふと、大事な何かを忘れているような気がした。
@@ -105,10 +99,11 @@ main{padding-top:0;}
 だけど優しく温かいそんな感じ。
 
 何かに追われるんじゃなくて、何かを夢中で追っていた日々を。
-何かを思い出すために。</section>
+何かを思い出すために。
+  </section>
 </section>
 
-<!-- PORTFOLIO -->
+  <!-- PORTFOLIO -->
 <section class="page" id="page-portfolio">
   <section class="section">
     <div class="portfolio-main">
@@ -117,7 +112,6 @@ main{padding-top:0;}
       <span class="arrow arrow-right">&#10095;</span>
     </div>
     <div class="portfolio-thumbs" id="thumbContainer">
-      <!-- 画像 -->
       <img src="11111.png" data-type="image" data-src="11111.png">
       <img src="22222.png" data-type="image" data-src="22222.png">
       <img src="112233.png" data-type="image" data-src="112233.png">
@@ -157,7 +151,6 @@ main{padding-top:0;}
     </div>
   </section>
 </section>
-
 </main>
 
 <!-- MODAL -->
@@ -169,96 +162,98 @@ main{padding-top:0;}
   <span class="modal-arrow modal-arrow-right" id="modalNext">&#10095;</span>
 </div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-document.addEventListener('DOMContentLoaded',()=>{
-  const links = document.querySelectorAll('[data-go]');
-  const pages = document.querySelectorAll('.page');
-  const homeVideo = document.getElementById('homeVideo');
-  let currentTime = 0;
-
-  // ページ切替
-  links.forEach(l=>{
-    l.addEventListener('click', e=>{
-      e.preventDefault();
-      links.forEach(x=>x.classList.remove('active'));
-      l.classList.add('active');
-
-      pages.forEach(p=>p.classList.remove('active'));
-      const page = document.getElementById('page-'+l.dataset.go);
-      if(page) page.classList.add('active');
-      window.scrollTo({top:0,behavior:'smooth'});
-
-      if(homeVideo){
-        if(l.dataset.go==='home'){
-          homeVideo.src = "https://www.youtube.com/embed/9W7SKpAJ6B0?autoplay=1&mute=0&controls=0&rel=0&playsinline=1&start=" + Math.floor(currentTime);
-        } else {
-          // 停止
-          homeVideo.src = "";
-        }
-      }
-    });
+let player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('homeVideo', {
+    videoId: '9W7SKpAJ6B0',
+    playerVars: {autoplay:1,controls:0,rel:0,playsinline:1},
+    events: {onReady: e=>e.target.playVideo()}
   });
+}
 
-  // ポートフォリオギャラリー
-  const mainImg = document.getElementById('mainImage');
-  const thumbs = document.querySelectorAll('#thumbContainer img');
-  let currentIndex = 0;
+const links=document.querySelectorAll('[data-go]');
+const pages=document.querySelectorAll('.page');
 
-  function showMain(i){
-    if(i<0) i = thumbs.length-1;
-    if(i>=thumbs.length) i = 0;
-    currentIndex = i;
-    const t = thumbs[i];
-    if(t.dataset.type==='image'){ mainImg.src=t.dataset.src; }
-    else{ mainImg.src=t.src; }
-  }
+links.forEach(link=>{
+  link.addEventListener('click',e=>{
+    e.preventDefault();
+    links.forEach(x=>x.classList.remove('active'));
+    link.classList.add('active');
+    pages.forEach(p=>p.classList.remove('active'));
+    const page=document.getElementById('page-'+link.dataset.go);
+    if(page) page.classList.add('active');
 
-  document.querySelector('.arrow-left').addEventListener('click',()=>showMain(currentIndex-1));
-  document.querySelector('.arrow-right').addEventListener('click',()=>showMain(currentIndex+1));
-
-  // スクロールで切替
-  document.getElementById('thumbContainer').addEventListener('scroll',()=>{
-    const scrollLeft = document.getElementById('thumbContainer').scrollLeft;
-    const idx = Math.round(scrollLeft / 85); // 80px+5px gap
-    showMain(idx);
-  });
-
-  thumbs.forEach((t,i)=>{
-    t.addEventListener('click',()=>showMain(i));
-  });
-
-  // モーダル
-  const modal = document.getElementById('modal');
-  const modalImage = document.getElementById('modalImage');
-  const modalFrame = document.getElementById('modalFrame');
-  const modalClose = document.getElementById('modalClose');
-  const modalPrev = document.getElementById('modalPrev');
-  const modalNext = document.getElementById('modalNext');
-
-  function openModal(i){
-    currentIndex=i;
-    const t=thumbs[i];
-    modal.classList.add('show');
-    modalImage.style.display='none';
-    modalFrame.style.display='none';
-    modalFrame.src='';
-    if(t.dataset.type==='image'){
-      modalImage.src=t.dataset.src;
-      modalImage.style.display='block';
-    } else {
-      modalFrame.src = t.dataset.src + '?autoplay=1&rel=0';
-      modalFrame.style.display='block';
+    if(player){
+      if(link.dataset.go!=='home') player.pauseVideo();
+      else player.playVideo();
     }
-  }
+  });
+});
 
-  mainImg.addEventListener('click',()=>openModal(currentIndex));
-  thumbs.forEach((t,i)=>t.addEventListener('click',()=>openModal(i)));
-  modalClose.addEventListener('click',()=>{modal.classList.remove('show'); modalFrame.src='';});
-  modal.addEventListener('click', e=>{if(e.target===modal){modal.classList.remove('show'); modalFrame.src='';}});
-  modalPrev.addEventListener('click',()=>openModal(currentIndex-1));
-  modalNext.addEventListener('click',()=>openModal(currentIndex+1));
+// Portfolio gallery
+const mainImg=document.getElementById('mainImage');
+const thumbs=document.querySelectorAll('#thumbContainer img');
+let currentIndex=0;
+
+function showMain(i){
+  if(i<0)i=thumbs.length-1;
+  if(i>=thumbs.length)i=0;
+  currentIndex=i;
+  const t=thumbs[i];
+  if(t.dataset.type==='image') mainImg.src=t.dataset.src;
+  else mainImg.src=t.src;
+}
+
+document.querySelector('.arrow-left').addEventListener('click',()=>showMain(currentIndex-1));
+document.querySelector('.arrow-right').addEventListener('click',()=>showMain(currentIndex+1));
+thumbs.forEach((t,i)=>t.addEventListener('click',()=>showMain(i)));
+
+// Modal
+const modal=document.getElementById('modal');
+const modalImage=document.getElementById('modalImage');
+const modalFrame=document.getElementById('modalFrame');
+const modalClose=document.getElementById('modalClose');
+const modalPrev=document.getElementById('modalPrev');
+const modalNext=document.getElementById('modalNext');
+
+function openModal(i){
+  currentIndex=i;
+  const t=thumbs[i];
+  modal.classList.add('show');
+  modalImage.style.display='none';
+  modalFrame.style.display='none';
+  modalFrame.src='';
+  if(t.dataset.type==='image'){modalImage.src=t.dataset.src; modalImage.style.display='block';}
+  else{modalFrame.src=t.dataset.src+'?autoplay=1&rel=0'; modalFrame.style.display='block';}
+}
+
+mainImg.addEventListener('click',()=>openModal(currentIndex));
+thumbs.forEach((t,i)=>t.addEventListener('click',()=>openModal(i)));
+modalClose.addEventListener('click',()=>{modal.classList.remove('show'); modalFrame.src='';});
+modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('show'); modalFrame.src='';}});
+modalPrev.addEventListener('click',()=>openModal(currentIndex-1));
+modalNext.addEventListener('click',()=>openModal(currentIndex+1));
+
+// ギャラリーのスクロールで切り替え
+const thumbContainer=document.getElementById('thumbContainer');
+let scrollTimeout;
+thumbContainer.addEventListener('scroll',()=>{
+  clearTimeout(scrollTimeout);
+  scrollTimeout=setTimeout(()=>{
+    const children=[...thumbContainer.children];
+    const centerX=thumbContainer.scrollLeft + thumbContainer.offsetWidth/2;
+    let closestIndex=0;
+    let closestDist=Infinity;
+    children.forEach((child,i)=>{
+      const childCenter=child.offsetLeft+child.offsetWidth/2;
+      const dist=Math.abs(centerX-childCenter);
+      if(dist<closestDist){closestDist=dist;closestIndex=i;}
+    });
+    showMain(closestIndex);
+  },100);
 });
 </script>
-
 </body>
 </html>
