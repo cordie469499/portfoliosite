@@ -23,17 +23,7 @@ a{text-decoration:none;color:inherit;}
 .nav a.active{color:#000;}
 
 .hero{display:flex;justify-content:center;margin:2.5mm 0;}
-#homeVideo{width:100%;height:500px;}
 .home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
-
-@media(max-width:768px){
-  #homeVideo{height:280px;}
-  .home-text{font-size:12px;}
-  .site-title{font-size:32px;margin:14px 0 12px;padding:0 16px;}
-  .nav-wrap{padding:0 12px;}
-  .nav ul{gap:22px;}
-  .nav a{font-size:15px;padding:12px 4px;}
-}
 
 .portfolio-main{position:relative;display:flex;justify-content:center;margin:2.5mm auto;max-width:900px;}
 .portfolio-main img,.portfolio-main video{display:block;max-width:100%;height:auto;cursor:grab;}
@@ -59,6 +49,17 @@ main{padding-top:0;}
 .modal-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;z-index:101;user-select:none;}
 .modal-arrow-left{left:20px;}
 .modal-arrow-right{right:20px;}
+
+@media (max-width:768px){
+  .site-title{font-size:32px;margin:14px 0 12px;padding:0 16px;}
+  .nav-wrap{padding:0 12px;}
+  .nav ul{gap:22px;}
+  .nav a{font-size:15px;padding:12px 4px;}
+  .arrow-left{left:5px;font-size:28px;}
+  .arrow-right{right:5px;font-size:28px;}
+  .portfolio-thumbs img,.portfolio-thumbs video{height:64px;}
+  .home-text{font-size:12px;}
+}
 </style>
 </head>
 <body>
@@ -78,17 +79,13 @@ main{padding-top:0;}
 </header>
 
 <main>
-  <!-- HOME -->
-  <section class="page active" id="page-home">
-    <section class="hero section">
-      <iframe id="homeVideo" 
-              src="https://www.youtube.com/embed/9W7SKpAJ6B0?enablejsapi=1&autoplay=1&controls=0&rel=0&modestbranding=1" 
-              frameborder="0" 
-              allow="autoplay; fullscreen" 
-              allowfullscreen></iframe>
-    </section>
-    <section class="home-text">
-『原風景』
+ <!-- HOME -->
+<section class="page active" id="page-home">
+  <section class="hero section">
+    <iframe id="homeVideo" width="100%" height="500" src="https://www.youtube.com/embed/9W7SKpAJ6B0?autoplay=1&mute=0&rel=0&playsinline=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </section>
+  <section class="home-text">[原風景]
+
 喧騒の中で日々を消費されている時、
 ふと、大事な何かを忘れているような気がした。
 
@@ -99,9 +96,8 @@ main{padding-top:0;}
 だけど優しく温かいそんな感じ。
 
 何かに追われるんじゃなくて、何かを夢中で追っていた日々を。
-何かを思い出すために。
-    </section>
-  </section>
+何かを思い出すために。</section>
+</section>
 
   <!-- PORTFOLIO -->
   <section class="page" id="page-portfolio">
@@ -111,6 +107,7 @@ main{padding-top:0;}
         <img id="mainImage" src="11111.png" style="display:block">
         <span class="arrow arrow-right">&#10095;</span>
       </div>
+
       <div class="portfolio-thumbs" id="thumbContainer">
         <img src="11111.png" data-type="image" data-src="11111.png">
         <img src="22222.png" data-type="image" data-src="22222.png">
@@ -123,8 +120,13 @@ main{padding-top:0;}
         <img src="insta2.jpg" data-type="image" data-src="insta2.jpg">
         <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
         <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
-        <!-- YouTube Thumbs -->
+
+        <!-- YouTube -->
         <img src="https://img.youtube.com/vi/lWCJ4D3CkvY/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/lWCJ4D3CkvY">
+        <img src="https://img.youtube.com/vi/6IrrJPv8wAg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/6IrrJPv8wAg">
+        <img src="https://img.youtube.com/vi/mLZKyQDoo0Y/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/mLZKyQDoo0Y">
+        <img src="https://img.youtube.com/vi/khdmv9MIlUg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/khdmv9MIlUg">
+        <img src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
       </div>
     </section>
   </section>
@@ -158,97 +160,99 @@ main{padding-top:0;}
   <span class="modal-arrow modal-arrow-right" id="modalNext">&#10095;</span>
 </div>
 
-<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-let player;
-let lastTime = 0;
+document.addEventListener('DOMContentLoaded',()=>{
+  const links=document.querySelectorAll('[data-go]');
+  const pages=document.querySelectorAll('.page');
+  const homeVideo=document.getElementById('homeVideo');
 
-// YouTube API ready
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('homeVideo', {
-    events: { 'onReady': e => { e.target.playVideo(); } }
-  });
-}
-
-// ページ切替
-const links = document.querySelectorAll('[data-go]');
-const pages = document.querySelectorAll('.page');
-
-links.forEach(l=>{
-  l.addEventListener('click', e=>{
-    e.preventDefault();
-    links.forEach(x=>x.classList.remove('active'));
-    l.classList.add('active');
-    pages.forEach(p=>p.classList.remove('active'));
-    const page = document.getElementById('page-'+l.dataset.go);
-    if(page) page.classList.add('active');
-
-    // YouTube再生制御
-    if(player){
-      if(l.dataset.go === 'home'){
-        player.seekTo(lastTime);
-        player.playVideo();
-      } else {
-        lastTime = player.getCurrentTime();
-        player.pauseVideo();
+  links.forEach(l=>{
+    l.addEventListener('click',e=>{
+      e.preventDefault();
+      links.forEach(x=>x.classList.remove('active'));
+      l.classList.add('active');
+      pages.forEach(p=>p.classList.remove('active'));
+      const page=document.getElementById('page-'+l.dataset.go);
+      if(page) page.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+      if(homeVideo){
+        if(l.dataset.go==='home'){
+          homeVideo.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        } else {
+          homeVideo.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
       }
-    }
-
-    window.scrollTo({top:0,behavior:'smooth'});
+    });
   });
+
+  const mainImg=document.getElementById('mainImage');
+  const thumbs=document.querySelectorAll('#thumbContainer img');
+  let currentIndex=0;
+
+  function showMain(i){
+    if(i<0) i=thumbs.length-1;
+    if(i>=thumbs.length) i=0;
+    currentIndex=i;
+    const t=thumbs[i];
+    if(t.dataset.type==='image'){
+      mainImg.src=t.dataset.src;
+    } else {
+      mainImg.src=t.src;
+    }
+  }
+
+  document.querySelector('.arrow-left').addEventListener('click',()=>showMain(currentIndex-1));
+  document.querySelector('.arrow-right').addEventListener('click',()=>showMain(currentIndex+1));
+  thumbs.forEach((t,i)=>t.addEventListener('click',()=>showMain(i)));
+
+  // タッチ・スクロール対応
+  const thumbContainer = document.getElementById('thumbContainer');
+  let isTouching = false;
+  thumbContainer.addEventListener('scroll', ()=>{
+    if(isTouching) return;
+    let closestIndex=0,closestDiff=Infinity;
+    const containerCenter = thumbContainer.scrollLeft + thumbContainer.offsetWidth/2;
+    thumbs.forEach((thumb,i)=>{
+      const thumbCenter = thumb.offsetLeft + thumb.offsetWidth/2;
+      const diff = Math.abs(containerCenter - thumbCenter);
+      if(diff<closestDiff){closestDiff=diff; closestIndex=i;}
+    });
+    showMain(closestIndex);
+  });
+  thumbContainer.addEventListener('touchstart', ()=>{isTouching=true;});
+  thumbContainer.addEventListener('touchend', ()=>{isTouching=false;});
+
+  // Modal
+  const modal=document.getElementById('modal');
+  const modalImage=document.getElementById('modalImage');
+  const modalFrame=document.getElementById('modalFrame');
+  const modalClose=document.getElementById('modalClose');
+  const modalPrev=document.getElementById('modalPrev');
+  const modalNext=document.getElementById('modalNext');
+
+  function openModal(i){
+    currentIndex=i;
+    const t=thumbs[i];
+    modal.classList.add('show');
+    modalImage.style.display='none';
+    modalFrame.style.display='none';
+    modalFrame.src='';
+    if(t.dataset.type==='image'){
+      modalImage.src=t.dataset.src;
+      modalImage.style.display='block';
+    } else {
+      modalFrame.src = t.dataset.src + '?autoplay=1&rel=0';
+      modalFrame.style.display='block';
+    }
+  }
+
+  mainImg.addEventListener('click',()=>openModal(currentIndex));
+  thumbs.forEach((t,i)=>t.addEventListener('click',()=>openModal(i)));
+  modalClose.addEventListener('click',()=>{modal.classList.remove('show'); modalFrame.src='';});
+  modal.addEventListener('click', e=>{if(e.target===modal){modal.classList.remove('show'); modalFrame.src='';}});
+  modalPrev.addEventListener('click',()=>openModal(currentIndex-1));
+  modalNext.addEventListener('click',()=>openModal(currentIndex+1));
 });
-
-// ポートフォリオギャラリー
-const mainImg=document.getElementById('mainImage');
-const thumbs=document.querySelectorAll('#thumbContainer img');
-let currentIndex=0;
-
-function showMain(i){
-  if(i<0) i=thumbs.length-1;
-  if(i>=thumbs.length) i=0;
-  currentIndex=i;
-  const t=thumbs[i];
-  if(t.dataset.type==='image'){
-    mainImg.src=t.dataset.src;
-  } else {
-    mainImg.src=t.src;
-  }
-}
-
-document.querySelector('.arrow-left').addEventListener('click',()=>showMain(currentIndex-1));
-document.querySelector('.arrow-right').addEventListener('click',()=>showMain(currentIndex+1));
-thumbs.forEach((t,i)=>t.addEventListener('click',()=>showMain(i)));
-
-// モーダル
-const modal=document.getElementById('modal');
-const modalImage=document.getElementById('modalImage');
-const modalFrame=document.getElementById('modalFrame');
-const modalClose=document.getElementById('modalClose');
-const modalPrev=document.getElementById('modalPrev');
-const modalNext=document.getElementById('modalNext');
-
-function openModal(i){
-  currentIndex=i;
-  const t=thumbs[i];
-  modal.classList.add('show');
-  modalImage.style.display='none';
-  modalFrame.style.display='none';
-  modalFrame.src='';
-  if(t.dataset.type==='image'){
-    modalImage.src=t.dataset.src;
-    modalImage.style.display='block';
-  } else {
-    modalFrame.src = t.dataset.src + '?autoplay=1&rel=0';
-    modalFrame.style.display='block';
-  }
-}
-
-mainImg.addEventListener('click',()=>openModal(currentIndex));
-thumbs.forEach((t,i)=>t.addEventListener('click',()=>openModal(i)));
-modalClose.addEventListener('click',()=>{modal.classList.remove('show'); modalFrame.src='';});
-modal.addEventListener('click', e=>{if(e.target===modal){modal.classList.remove('show'); modalFrame.src='';}});
-modalPrev.addEventListener('click',()=>openModal(currentIndex-1));
-modalNext.addEventListener('click',()=>openModal(currentIndex+1));
 </script>
 
 </body>
