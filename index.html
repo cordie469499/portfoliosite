@@ -78,14 +78,14 @@ main{padding-top:0;}
 </header>
 
 <main>
-  <!-- HOME -->
-  <section class="page active" id="page-home">
-    <section class="hero section">
-    <img src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
-      </div>
-      </video>
-    </section>
-    <section class="home-text">[原風景]
+ <!-- HOME -->
+<section class="page active" id="page-home">
+  <section class="hero section">
+    <video id="homeVideo" autoplay loop playsinline controls>
+      <source src="video/0801.mp4" type="video/mp4">
+    </video>
+  </section>
+  <section class="home-text">[原風景]
 
 喧騒の中で日々を消費されている時、
 ふと、大事な何かを忘れているような気がした。
@@ -98,7 +98,7 @@ main{padding-top:0;}
 
 何かに追われるんじゃなくて、何かを夢中で追っていた日々を。
 何かを思い出すために。</section>
-  </section>
+</section>
 
   <!-- PORTFOLIO -->
   <section class="page" id="page-portfolio">
@@ -216,13 +216,13 @@ function openModal(i){
   modalImage.style.display='none';
   modalFrame.style.display='none';
   modalFrame.src='';
-  if(t.dataset.type==='image'){
-    modalImage.src=t.dataset.src;
-    modalImage.style.display='block';
-  } else {
-    modalFrame.src=t.dataset.src+'?autoplay=1&rel=0&mute=1';
-    modalFrame.style.display='block';
-  }
+  // ModalでのYouTube再生
+if(t.dataset.type==='image'){
+  modalImage.src=t.dataset.src;
+  modalImage.style.display='block';
+} else {
+  modalFrame.src = t.dataset.src + '?autoplay=1&rel=0'; // ミュートなし
+  modalFrame.style.display='block';
 }
 
 mainImg.addEventListener('click',()=>openModal(currentIndex));
