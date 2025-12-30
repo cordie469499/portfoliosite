@@ -22,7 +22,7 @@ a{text-decoration:none;color:inherit;}
 .nav a{display:block;padding:14px 6px;font-size:17px;font-weight:400;color:#aaa;transition:.2s;}
 .nav a.active{color:#000;}
 
-.hero{display:flex;justify-content:center;margin:2.5mm 0;}
+.hero{display:flex;justify-content:center;margin:2.5mm 0;position:relative;}
 .home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
 
 .portfolio-main{position:relative;display:flex;justify-content:center;margin:2.5mm auto;max-width:900px;}
@@ -79,13 +79,30 @@ main{padding-top:0;}
 
 <main>
  <!-- HOME -->
-<section class="hero section">
-  <iframe id="homeVideo" 
-          src="https://www.youtube.com/embed/9W7SKpAJ6B0" 
-          width="100%" height="500" 
-          frameborder="0" allow="fullscreen" allowfullscreen>
-  </iframe>
-</section>
+<section class="page active" id="page-home">
+  <section class="hero section">
+    <!-- 再生ボタン -->
+    <button id="playBtn" style="
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%, -50%);
+      font-size:40px;
+      padding:20px 30px;
+      cursor:pointer;
+      z-index:10;
+    ">▶ 再生</button>
+
+    <!-- 埋め込みYouTube -->
+    <div id="playerContainer" style="width:100%;padding-top:56.25%;position:relative;">
+      <iframe id="homePlayer" style="position:absolute;top:0;left:0;width:100%;height:100%;display:none;"
+        src=""
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
   <section class="home-text">[原風景]
 
 喧騒の中で日々を消費されている時、
@@ -164,26 +181,42 @@ main{padding-top:0;}
 
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
-  const links=document.querySelectorAll('[data-go]');
-  const pages=document.querySelectorAll('.page');
-  const homeVideo=document.getElementById('homeVideo');
+  const links = document.querySelectorAll('[data-go]');
+  const pages = document.querySelectorAll('.page');
+
+  const playBtn = document.getElementById('playBtn');
+  const homePlayer = document.getElementById('homePlayer');
 
   links.forEach(l=>{
-    l.addEventListener('click',e=>{
+    l.addEventListener('click', e=>{
       e.preventDefault();
       links.forEach(x=>x.classList.remove('active'));
       l.classList.add('active');
       pages.forEach(p=>p.classList.remove('active'));
-      const page=document.getElementById('page-'+l.dataset.go);
+      const page = document.getElementById('page-'+l.dataset.go);
       if(page) page.classList.add('active');
-      window.scrollTo({top:0,behavior:'smooth'});
-      if(homeVideo){
-        if(l.dataset.go==='home'){homeVideo.play().catch(()=>console.log('autoplay blocked'));}
-        else{homeVideo.pause();homeVideo.currentTime=0;}
+
+      if(l.dataset.go === 'home'){
+        playBtn.style.display = "block";
+        homePlayer.style.display = "none";
+        homePlayer.src = "";
+      } else {
+        playBtn.style.display = "none";
+        homePlayer.style.display = "none";
+        homePlayer.src = "";
       }
     });
   });
 
+  // ホーム動画再生
+  playBtn.addEventListener('click', () => {
+    const videoId = "9W7SKpAJ6B0";
+    homePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+    homePlayer.style.display = "block";
+    playBtn.style.display = "none";
+  });
+
+  // Portfolio gallery
   const mainImg=document.getElementById('mainImage');
   const thumbs=document.querySelectorAll('#thumbContainer img');
   let currentIndex=0;
