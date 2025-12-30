@@ -11,40 +11,35 @@ body{font-family:"Bodoni Moda",serif;color:#000;background:#fff;line-height:1.7;
 img,video,iframe{display:block;max-width:100%;height:auto;}
 a{text-decoration:none;color:inherit;}
 
-.container{max-width:900px;margin:0 auto;padding:0 24px;}
-.section{padding:0.4mm 0;}
 .header{width:100%;background:#fff;}
 .site-title{font-size:44px;letter-spacing:.04em;margin:22px 0 18px;padding:0 24px;color:#000;}
-
-/* nav */
 .nav-wrap{position:relative;max-width:900px;margin:0 auto;padding:0 24px;}
 .nav-wrap::before,.nav-wrap::after{content:"";position:absolute;left:0;right:0;height:1px;background:#ccc;}
 .nav-wrap::before{top:0;}
 .nav-wrap::after{bottom:0;}
 .nav{display:flex;justify-content:center;}
 .nav ul{display:flex;gap:40px;list-style:none;}
-.nav a{display:block;padding:14px 6px;font-size:17px;color:#aaa;transition:.2s;}
+.nav a{display:block;padding:14px 6px;font-size:17px;font-weight:400;color:#aaa;transition:.2s;}
 .nav a.active{color:#000;}
 
-/* hero */
 .hero{display:flex;justify-content:center;margin:2.5mm 0;}
-.hero video{width:100%;height:auto;}
-
 .home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
 
-/* portfolio */
 .portfolio-main{position:relative;display:flex;justify-content:center;margin:2.5mm auto;max-width:900px;}
-.portfolio-main img,.portfolio-main video{cursor:pointer;max-width:100%;height:auto;}
+.portfolio-main img,.portfolio-main video{display:block;max-width:100%;height:auto;cursor:grab;}
 .arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:30px;cursor:pointer;color:gray;font-weight:bold;user-select:none;z-index:50;}
 .arrow-left{left:-40px;}
 .arrow-right{right:-40px;}
 
-.portfolio-thumbs{display:flex;gap:5px;overflow-x:auto;margin-top:5px;max-width:900px;margin:auto;}
+.portfolio-thumbs{display:flex;gap:5px;overflow-x:auto;margin-top:5px;max-width:900px;margin-left:auto;margin-right:auto;}
 .portfolio-thumbs img,.portfolio-thumbs video{height:80px;width:auto;cursor:pointer;flex-shrink:0;object-fit:cover;}
 
 .page{display:none;}
 .page.active{display:block;}
 main{padding-top:0;}
+
+#page-about .container,#page-contact .container{max-width:700px;margin:0 auto;padding:40px 20px;text-align:center;line-height:1.8;}
+#page-about p,#page-contact p{margin-bottom:16px;font-size:18px;}
 
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;}
@@ -55,25 +50,19 @@ main{padding-top:0;}
 .modal-arrow-left{left:20px;}
 .modal-arrow-right{right:20px;}
 
-/* videos section */
-.videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-.video-wrap{width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.06);} 
-.video-wrap iframe{width:100%;height:100%;border:0;}
-
 @media (max-width:768px){
   .site-title{font-size:32px;margin:14px 0 12px;padding:0 16px;}
   .nav-wrap{padding:0 12px;}
   .nav ul{gap:22px;}
   .nav a{font-size:15px;padding:12px 4px;}
-  .portfolio-main{margin:10px auto;}
   .arrow-left{left:4px;}
   .arrow-right{right:4px;}
-  .portfolio-thumbs{padding:0 8px;}
   .portfolio-thumbs img,.portfolio-thumbs video{height:64px;}
 }
 </style>
 </head>
 <body>
+
 <header class="header">
   <h1 class="site-title">CORDIE;</h1>
   <div class="nav-wrap">
@@ -89,10 +78,11 @@ main{padding-top:0;}
 </header>
 
 <main>
+  <!-- HOME -->
   <section class="page active" id="page-home">
     <section class="hero section">
-      <video id="homeVideo" autoplay loop playsinline controls>
-        <source src="video/0801.mp4" type="video/mp4">
+    <img src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
+      </div>
       </video>
     </section>
     <section class="home-text">[原風景]
@@ -110,17 +100,16 @@ main{padding-top:0;}
 何かを思い出すために。</section>
   </section>
 
+  <!-- PORTFOLIO -->
   <section class="page" id="page-portfolio">
     <section class="section">
       <div class="portfolio-main">
         <span class="arrow arrow-left">&#10094;</span>
-        <img id="mainImage" src="11111.png">
-        <video id="mainVideo" style="display:none" controls></video>
+        <img id="mainImage" src="11111.png" style="display:block">
         <span class="arrow arrow-right">&#10095;</span>
       </div>
 
       <div class="portfolio-thumbs" id="thumbContainer">
-        <!-- Images -->
         <img src="11111.png" data-type="image" data-src="11111.png">
         <img src="22222.png" data-type="image" data-src="22222.png">
         <img src="112233.png" data-type="image" data-src="112233.png">
@@ -143,6 +132,7 @@ main{padding-top:0;}
     </section>
   </section>
 
+  <!-- ABOUT -->
   <section class="page" id="page-about">
     <section class="section">
       <div class="container">
@@ -151,6 +141,7 @@ main{padding-top:0;}
     </section>
   </section>
 
+  <!-- CONTACT -->
   <section class="page" id="page-contact">
     <section class="section">
       <div class="container">
@@ -161,101 +152,86 @@ main{padding-top:0;}
   </section>
 </main>
 
-<!-- Modal -->
+<!-- MODAL -->
 <div class="modal" id="modal">
   <span class="modal-close" id="modalClose">&times;</span>
   <span class="modal-arrow modal-arrow-left" id="modalPrev">&#10094;</span>
   <img class="modal-content" id="modalImage" style="display:none">
-  <iframe class="modal-content" id="modalFrame" style="display:none" allowfullscreen></iframe>
+  <iframe class="modal-content" id="modalFrame" style="display:none" allow="autoplay; fullscreen"></iframe>
   <span class="modal-arrow modal-arrow-right" id="modalNext">&#10095;</span>
 </div>
 
 <script>
-// ページ切り替え
+// Page switch
 const links=document.querySelectorAll('[data-go]');
 const pages=document.querySelectorAll('.page');
 const homeVideo=document.getElementById('homeVideo');
-
-links.forEach(link=>{
-  link.addEventListener('click',e=>{
+links.forEach(l=>{
+  l.addEventListener('click',e=>{
     e.preventDefault();
-    links.forEach(l=>l.classList.remove('active'));
-    link.classList.add('active');
-    links.forEach(l=>l.style.color=l.classList.contains('active')?'black':'#aaa');
-
-    const target = link.dataset.go;
+    links.forEach(x=>x.classList.remove('active'));
+    l.classList.add('active');
     pages.forEach(p=>p.classList.remove('active'));
-    const page = document.getElementById('page-'+target);
+    const page=document.getElementById('page-'+l.dataset.go);
     if(page) page.classList.add('active');
-
-    window.scrollTo({top:0, behavior:'smooth'});
-    if(target!=="home"){homeVideo.pause(); homeVideo.currentTime=0;} else {homeVideo.play();}
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(l.dataset.go==='home'){homeVideo.play().catch(()=>console.log('autoplay blocked'));}
+    else{homeVideo.pause();homeVideo.currentTime=0;}
   });
 });
 
-// ギャラリー
-const mainImg = document.getElementById('mainImage');
-const mainVid = document.getElementById('mainVideo');
-const thumbs = document.querySelectorAll('#thumbContainer img,#thumbContainer video');
-let currentIndex = 0;
+// Portfolio gallery
+const mainImg=document.getElementById('mainImage');
+const thumbs=document.querySelectorAll('#thumbContainer img');
+let currentIndex=0;
 
 function showMain(i){
   if(i<0) i=thumbs.length-1;
   if(i>=thumbs.length) i=0;
-  currentIndex = i;
-  const t = thumbs[i];
+  currentIndex=i;
+  const t=thumbs[i];
   if(t.dataset.type==='image'){
-    mainImg.src = t.dataset.src;
-    mainImg.style.display='block';
-    mainVid.style.display='none';
-    mainVid.pause();
-    mainVid.currentTime=0;
+    mainImg.src=t.dataset.src;
   } else {
-    mainVid.src = t.dataset.src;
-    mainVid.style.display='block';
-    mainVid.play();
-    mainImg.style.display='none';
+    mainImg.src=t.src; // サムネ表示
   }
 }
 
-// arrows
 document.querySelector('.arrow-left').addEventListener('click',()=>showMain(currentIndex-1));
 document.querySelector('.arrow-right').addEventListener('click',()=>showMain(currentIndex+1));
 thumbs.forEach((t,i)=>t.addEventListener('click',()=>showMain(i)));
 
-// modal
-const modal = document.getElementById('modal');
-const modalImage = document.getElementById('modalImage');
-const modalFrame = document.getElementById('modalFrame');
-const modalClose = document.getElementById('modalClose');
-const modalPrev = document.getElementById('modalPrev');
-const modalNext = document.getElementById('modalNext');
+// Modal
+const modal=document.getElementById('modal');
+const modalImage=document.getElementById('modalImage');
+const modalFrame=document.getElementById('modalFrame');
+const modalClose=document.getElementById('modalClose');
+const modalPrev=document.getElementById('modalPrev');
+const modalNext=document.getElementById('modalNext');
 
 function openModal(i){
-  currentIndex = i;
-  const t = thumbs[i];
+  currentIndex=i;
+  const t=thumbs[i];
   modal.classList.add('show');
-
   modalImage.style.display='none';
   modalFrame.style.display='none';
-
+  modalFrame.src='';
   if(t.dataset.type==='image'){
-    modalImage.src = t.dataset.src;
+    modalImage.src=t.dataset.src;
     modalImage.style.display='block';
   } else {
-    modalFrame.src = t.dataset.src + '?autoplay=1&rel=0';
+    modalFrame.src=t.dataset.src+'?autoplay=1&rel=0&mute=1';
     modalFrame.style.display='block';
   }
 }
 
 mainImg.addEventListener('click',()=>openModal(currentIndex));
-mainVid.addEventListener('click',()=>openModal(currentIndex));
-modalClose.addEventListener('click',()=>{ modal.classList.remove('show'); modalFrame.src=''; });
+thumbs.forEach((t,i)=>t.addEventListener('click',()=>openModal(i)));
+modalClose.addEventListener('click',()=>{modal.classList.remove('show'); modalFrame.src='';});
+modal.addEventListener('click', e=>{if(e.target===modal){modal.classList.remove('show'); modalFrame.src='';}});
 modalPrev.addEventListener('click',()=>openModal(currentIndex-1));
 modalNext.addEventListener('click',()=>openModal(currentIndex+1));
-modal.addEventListener('click', e=>{ if(e.target===modal){ modal.classList.remove('show'); modalFrame.src=''; } });
-
-showMain(0);
 </script>
+
 </body>
 </html>
