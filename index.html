@@ -41,6 +41,22 @@ main{padding-top:0;}
 #page-about .container,#page-contact .container{max-width:700px;margin:0 auto;padding:40px 20px;text-align:center;line-height:1.8;}
 #page-about p,#page-contact p{margin-bottom:16px;font-size:18px;}
 
+/* responsive text */
+@media (max-width:768px){
+  .site-title{font-size:32px;margin:14px 0 12px;padding:0 16px;}
+  .nav-wrap{padding:0 12px;}
+  .nav ul{gap:22px;}
+  .nav a{font-size:15px;padding:12px 4px;}
+  .arrow-left{left:4px;}
+  .arrow-right{right:4px;}
+  .portfolio-thumbs img,.portfolio-thumbs video{height:64px;}
+  .home-text{font-size:12px;}
+}
+
+@media (min-width:769px){
+  .home-text{font-size:18px;}
+}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;}
 .modal.show{display:flex;}
@@ -49,17 +65,6 @@ main{padding-top:0;}
 .modal-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;z-index:101;user-select:none;}
 .modal-arrow-left{left:20px;}
 .modal-arrow-right{right:20px;}
-
-@media (max-width:768px){
-  .site-title{font-size:32px;margin:14px 0 12px;padding:0 16px;}
-  .nav-wrap{padding:0 12px;}
-  .nav ul{gap:22px;}
-  .nav a{font-size:15px;padding:12px 4px;}
-  .arrow-left{left:5px;font-size:28px;}
-  .arrow-right{right:5px;font-size:28px;}
-  .portfolio-thumbs img,.portfolio-thumbs video{height:64px;}
-  .home-text{font-size:12px;}
-}
 </style>
 </head>
 <body>
@@ -83,7 +88,9 @@ main{padding-top:0;}
 <section class="page active" id="page-home">
   <section class="hero section">
     <div id="homeVideoContainer">
-      <div id="homeVideo"></div>
+      <iframe id="homeVideo" width="100%" height="500"
+              src="https://www.youtube.com/embed/9W7SKpAJ6B0?autoplay=1&mute=0&controls=0&rel=0&playsinline=1"
+              frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
     </div>
   </section>
   <section class="home-text">[原風景]
@@ -101,56 +108,56 @@ main{padding-top:0;}
 何かを思い出すために。</section>
 </section>
 
-  <!-- PORTFOLIO -->
-  <section class="page" id="page-portfolio">
-    <section class="section">
-      <div class="portfolio-main">
-        <span class="arrow arrow-left">&#10094;</span>
-        <img id="mainImage" src="11111.png" style="display:block">
-        <span class="arrow arrow-right">&#10095;</span>
-      </div>
-
-      <div class="portfolio-thumbs" id="thumbContainer">
-        <img src="11111.png" data-type="image" data-src="11111.png">
-        <img src="22222.png" data-type="image" data-src="22222.png">
-        <img src="112233.png" data-type="image" data-src="112233.png">
-        <img src="5DE.JPG" data-type="image" data-src="5DE.JPG">
-        <img src="E12.JPG" data-type="image" data-src="E12.JPG">
-        <img src="enter1.png" data-type="image" data-src="enter1.png">
-        <img src="F96.JPG" data-type="image" data-src="F96.JPG">
-        <img src="insta1.jpg" data-type="image" data-src="insta1.jpg">
-        <img src="insta2.jpg" data-type="image" data-src="insta2.jpg">
-        <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
-        <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
-
-        <!-- YouTubeサムネ -->
-        <img src="https://img.youtube.com/vi/lWCJ4D3CkvY/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/lWCJ4D3CkvY">
-        <img src="https://img.youtube.com/vi/6IrrJPv8wAg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/6IrrJPv8wAg">
-        <img src="https://img.youtube.com/vi/mLZKyQDoo0Y/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/mLZKyQDoo0Y">
-        <img src="https://img.youtube.com/vi/khdmv9MIlUg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/khdmv9MIlUg">
-        <img src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
-      </div>
-    </section>
+<!-- PORTFOLIO -->
+<section class="page" id="page-portfolio">
+  <section class="section">
+    <div class="portfolio-main">
+      <span class="arrow arrow-left">&#10094;</span>
+      <img id="mainImage" src="11111.png" style="display:block">
+      <span class="arrow arrow-right">&#10095;</span>
+    </div>
+    <div class="portfolio-thumbs" id="thumbContainer">
+      <!-- 画像 -->
+      <img src="11111.png" data-type="image" data-src="11111.png">
+      <img src="22222.png" data-type="image" data-src="22222.png">
+      <img src="112233.png" data-type="image" data-src="112233.png">
+      <img src="5DE.JPG" data-type="image" data-src="5DE.JPG">
+      <img src="E12.JPG" data-type="image" data-src="E12.JPG">
+      <img src="enter1.png" data-type="image" data-src="enter1.png">
+      <img src="F96.JPG" data-type="image" data-src="F96.JPG">
+      <img src="insta1.jpg" data-type="image" data-src="insta1.jpg">
+      <img src="insta2.jpg" data-type="image" data-src="insta2.jpg">
+      <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
+      <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
+      <!-- YouTube -->
+      <img src="https://img.youtube.com/vi/lWCJ4D3CkvY/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/lWCJ4D3CkvY">
+      <img src="https://img.youtube.com/vi/6IrrJPv8wAg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/6IrrJPv8wAg">
+      <img src="https://img.youtube.com/vi/mLZKyQDoo0Y/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/mLZKyQDoo0Y">
+      <img src="https://img.youtube.com/vi/khdmv9MIlUg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/khdmv9MIlUg">
+      <img src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
+    </div>
   </section>
+</section>
 
-  <!-- ABOUT -->
-  <section class="page" id="page-about">
-    <section class="section">
-      <div class="container">
-        <p>Started career as an Art/Creative Director in 2022...</p>
-      </div>
-    </section>
+<!-- ABOUT -->
+<section class="page" id="page-about">
+  <section class="section">
+    <div class="container">
+      <p>Started career as an Art/Creative Director in 2022...</p>
+    </div>
   </section>
+</section>
 
-  <!-- CONTACT -->
-  <section class="page" id="page-contact">
-    <section class="section">
-      <div class="container">
-        <p>Instagram: @y_kkk_0618</p>
-        <p>G-mail: cordieofficial469499@gmail.com</p>
-      </div>
-    </section>
+<!-- CONTACT -->
+<section class="page" id="page-contact">
+  <section class="section">
+    <div class="container">
+      <p>Instagram: @y_kkk_0618</p>
+      <p>G-mail: cordieofficial469499@gmail.com</p>
+    </div>
   </section>
+</section>
+
 </main>
 
 <!-- MODAL -->
@@ -162,80 +169,71 @@ main{padding-top:0;}
   <span class="modal-arrow modal-arrow-right" id="modalNext">&#10095;</span>
 </div>
 
-<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-let player;
-let lastTime = 0;
-
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('homeVideo', {
-    videoId: '9W7SKpAJ6B0',
-    playerVars: {autoplay:1,controls:0,rel:0,playsinline:1},
-    events: {
-      'onReady': onPlayerReady,
-    }
-  });
-}
-
-function onPlayerReady(event){
-  if(lastTime>0) player.seekTo(lastTime);
-  player.playVideo();
-}
-
 document.addEventListener('DOMContentLoaded',()=>{
-  const links=document.querySelectorAll('[data-go]');
-  const pages=document.querySelectorAll('.page');
+  const links = document.querySelectorAll('[data-go]');
+  const pages = document.querySelectorAll('.page');
+  const homeVideo = document.getElementById('homeVideo');
+  let currentTime = 0;
 
+  // ページ切替
   links.forEach(l=>{
-    l.addEventListener('click',e=>{
+    l.addEventListener('click', e=>{
       e.preventDefault();
       links.forEach(x=>x.classList.remove('active'));
       l.classList.add('active');
+
       pages.forEach(p=>p.classList.remove('active'));
-      const page=document.getElementById('page-'+l.dataset.go);
+      const page = document.getElementById('page-'+l.dataset.go);
       if(page) page.classList.add('active');
       window.scrollTo({top:0,behavior:'smooth'});
 
-      if(player){
+      if(homeVideo){
         if(l.dataset.go==='home'){
-          player.seekTo(lastTime);
-          player.playVideo();
+          homeVideo.src = "https://www.youtube.com/embed/9W7SKpAJ6B0?autoplay=1&mute=0&controls=0&rel=0&playsinline=1&start=" + Math.floor(currentTime);
         } else {
-          lastTime = player.getCurrentTime();
-          player.pauseVideo();
+          // 停止
+          homeVideo.src = "";
         }
       }
     });
   });
 
-  // ギャラリー
-  const mainImg=document.getElementById('mainImage');
-  const thumbs=document.querySelectorAll('#thumbContainer img');
-  let currentIndex=0;
+  // ポートフォリオギャラリー
+  const mainImg = document.getElementById('mainImage');
+  const thumbs = document.querySelectorAll('#thumbContainer img');
+  let currentIndex = 0;
 
   function showMain(i){
-    if(i<0) i=thumbs.length-1;
-    if(i>=thumbs.length) i=0;
-    currentIndex=i;
-    const t=thumbs[i];
-    if(t.dataset.type==='image'){
-      mainImg.src=t.dataset.src;
-    } else {
-      mainImg.src=t.src;
-    }
+    if(i<0) i = thumbs.length-1;
+    if(i>=thumbs.length) i = 0;
+    currentIndex = i;
+    const t = thumbs[i];
+    if(t.dataset.type==='image'){ mainImg.src=t.dataset.src; }
+    else{ mainImg.src=t.src; }
   }
 
   document.querySelector('.arrow-left').addEventListener('click',()=>showMain(currentIndex-1));
   document.querySelector('.arrow-right').addEventListener('click',()=>showMain(currentIndex+1));
-  thumbs.forEach((t,i)=>t.addEventListener('click',()=>showMain(i)));
+
+  // スクロールで切替
+  document.getElementById('thumbContainer').addEventListener('scroll',()=>{
+    const scrollLeft = document.getElementById('thumbContainer').scrollLeft;
+    const idx = Math.round(scrollLeft / 85); // 80px+5px gap
+    showMain(idx);
+  });
+
+  thumbs.forEach((t,i)=>{
+    t.addEventListener('click',()=>showMain(i));
+  });
 
   // モーダル
-  const modal=document.getElementById('modal');
-  const modalImage=document.getElementById('modalImage');
-  const modalFrame=document.getElementById('modalFrame');
-  const modalClose=document.getElementById('modalClose');
-  const modalPrev=document.getElementById('modalPrev');
-  const modalNext=document.getElementById('modalNext');
+  const modal = document.getElementById('modal');
+  const modalImage = document.getElementById('modalImage');
+  const modalFrame = document.getElementById('modalFrame');
+  const modalClose = document.getElementById('modalClose');
+  const modalPrev = document.getElementById('modalPrev');
+  const modalNext = document.getElementById('modalNext');
 
   function openModal(i){
     currentIndex=i;
@@ -261,5 +259,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   modalNext.addEventListener('click',()=>openModal(currentIndex+1));
 });
 </script>
+
 </body>
 </html>
