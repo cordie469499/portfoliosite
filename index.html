@@ -28,7 +28,7 @@ a{text-decoration:none;color:inherit;}
 
 /* hero */
 .hero{display:flex;justify-content:center;margin:2.5mm 0;}
-.hero img,.hero video{width:100%;height:auto;}
+.hero video{width:100%;height:auto;}
 
 .home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
 
@@ -57,6 +57,19 @@ main{padding-top:0;}
 .modal-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;z-index:101;user-select:none;}
 .modal-arrow-left{left:20px;}
 .modal-arrow-right{right:20px;}
+
+/* --- mobile (iPhone) --- */
+@media (max-width:768px){
+  .site-title{font-size:32px;margin:14px 0 12px;padding:0 16px;}
+  .nav-wrap{padding:0 12px;}
+  .nav ul{gap:22px;}
+  .nav a{font-size:15px;padding:12px 4px;}
+  .portfolio-main{margin:10px auto;}
+  .arrow-left{left:4px;}
+  .arrow-right{right:4px;}
+  .portfolio-thumbs{padding:0 8px;}
+  .portfolio-thumbs img,.portfolio-thumbs video{height:64px;}
+}
 </style>
 </head>
 <body>
@@ -93,8 +106,7 @@ main{padding-top:0;}
 だけど優しく温かいそんな感じ。
 
 何かに追われるんじゃなくて、何かを夢中で追っていた日々を。
-何かを思い出すために。
-    </section>
+何かを思い出すために。</section>
   </section>
 
   <section class="page" id="page-portfolio">
@@ -160,7 +172,7 @@ main{padding-top:0;}
 const links=document.querySelectorAll("[data-go]");
 const pages=document.querySelectorAll(".page");
 const homeVideo=document.getElementById("homeVideo");
-links.forEach(l=>{l.addEventListener("click",e=>{e.preventDefault();links.forEach(x=>x.classList.remove("active"));l.classList.add("active");links.forEach(x=>{x.style.color=(x.classList.contains("active"))?'black':'#aaa';});const t=l.dataset.go;pages.forEach(p=>p.classList.remove("active"));document.getElementById(page-${t}).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(t!=="home"){homeVideo.pause();homeVideo.currentTime=0;}else{homeVideo.play();}});});
+links.forEach(l=>{l.addEventListener("click",e=>{e.preventDefault();links.forEach(x=>x.classList.remove("active"));l.classList.add("active");links.forEach(x=>{x.style.color=(x.classList.contains("active"))?'black':'#aaa';});const t=l.dataset.go;pages.forEach(p=>p.classList.remove("active"));document.getElementById(`page-${t}`).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(t!=="home"){homeVideo.pause();homeVideo.currentTime=0;}else{homeVideo.play();}});});
 
 // portfolio gallery
 const mainImg=document.getElementById("mainImage");
