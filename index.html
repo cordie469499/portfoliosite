@@ -25,8 +25,18 @@ a{text-decoration:none;color:inherit;}
 .nav-wrap::before{top:0;margin-left:60mm;margin-right:60mm;}
 .nav-wrap::after{bottom:0;margin-left:60mm;margin-right:60mm;}
 
-.nav{display:flex;justify-content:flex-start;}
-.nav ul{display:flex;justify-content:space-between;list-style:none;width:calc(100% - 50mm);margin-left:25mm;}
+.nav{
+  display:flex;
+  justify-content:center;
+}
+
+.nav ul{
+  display:flex;
+  gap:40px;
+  list-style:none;
+  margin:0;
+}
+  
 .nav a{display:block;padding:14px 6px;font-size:17px;font-weight:400;color:#aaa;transition:.2s;}
 .nav a.active{color:#000;}
 
