@@ -1,57 +1,93 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Bodoni Moda",serif;color:#000;background:#fff;line-height:1.7;}
+img,video{display:block;max-width:100%;height:auto;border-radius:0;}
+a{text-decoration:none;color:inherit;}
 
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:"Bodoni Moda",serif;color:#000;background:#fff;line-height:1.7;}
-    a{text-decoration:none;color:inherit;}
+.container{max-width:900px;margin:0 auto;padding:0 24px;}
+.section{padding:0.4mm 0;}
+.header{width:100%;background:#fff;}
+.site-title{font-size:44px;letter-spacing:.04em;margin:22px 0 18px;padding:0 24px;color:#000;}
 
-    header{border-top:1px solid #000;border-bottom:1px solid #000;padding:10px 0;}
-    nav{display:flex;justify-content:center;gap:32px;font-size:15px;}
-    nav a{color:#777;padding:10px 4px;}
-    nav a.active{color:#000;}
+/* nav */
+.nav-wrap{position:relative;max-width:900px;margin:0 auto;padding:0 24px;}
+.nav-wrap::before,.nav-wrap::after{content:"";position:absolute;left:0;right:0;height:1px;background:#ccc;}
+.nav-wrap::before{top:0;}
+.nav-wrap::after{bottom:0;}
+.nav{display:flex;justify-content:center;}
+.nav ul{display:flex;gap:40px;list-style:none;}
+.nav a{display:block;padding:14px 6px;font-size:17px;font-weight:400;color:#aaa;transition:.2s;}
+.nav a.active{color:#000;}
 
-    main{max-width:900px;margin:0 auto;padding:20px 16px;}
-    h1{font-size:32px;margin-bottom:12px;}
-    h2{font-size:22px;margin:20px 0 10px;}
+/* hero */
+.hero{display:flex;justify-content:center;margin:2.5mm 0;}
+.hero video{width:100%;height:auto;}
 
-    /* YouTube */
-    .videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px;}
-    .video-wrap{width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid #eee;}
-    .video-wrap iframe{width:100%;height:100%;border:0;}
+.home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
 
-    /* Gallery */
-    .gallery{
-      margin-top:32px;
-    }
-    .gallery h3{font-size:20px;margin-bottom:10px;}
-    .portfolio-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;}
-    .portfolio-thumbs img{width:100%;height:100%;object-fit:cover;border-radius:10px;border:1px solid #eee;}
+/* portfolio */
+.portfolio-main{position:relative;display:flex;justify-content:center;margin:2.5mm auto;max-width:900px;}
+.portfolio-main img,.portfolio-main video{display:block;max-width:100%;height:auto;cursor:grab;}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:30px;cursor:pointer;color:gray;font-weight:bold;user-select:none;z-index:50;}
+.arrow-left{left:-40px;}
+.arrow-right{right:-40px;}
 
-    @media (max-width:768px){
-      nav{gap:18px;font-size:14px;}
-      h1{font-size:26px;}
-    }
-  </style>
+.portfolio-thumbs{display:flex;gap:5px;overflow-x:auto;margin-top:5px;max-width:900px;margin-left:auto;margin-right:auto;}
+.portfolio-thumbs img,.portfolio-thumbs video{height:80px;width:auto;cursor:pointer;flex-shrink:0;object-fit:cover;}
+
+#page-about .container,#page-contact .container{max-width:700px;margin:0 auto;padding:40px 20px;text-align:center;line-height:1.8;}
+#page-about p,#page-contact p{margin-bottom:16px;font-size:18px;}
+
+.page{display:none;}
+.page.active{display:block;}
+main{padding-top:0;}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;}
+.modal.show{display:flex;}
+.modal-content{max-width:90%;max-height:90%;}
+.modal-close{position:absolute;top:10px;right:10px;font-size:30px;cursor:pointer;color:#fff;z-index:101;}
+.modal-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;z-index:101;user-select:none;}
+.modal-arrow-left{left:20px;}
+.modal-arrow-right{right:20px;}
+
+/* --- mobile (iPhone) --- */
+@media (max-width:768px){
+  .site-title{font-size:32px;margin:14px 0 12px;padding:0 16px;}
+  .nav-wrap{padding:0 12px;}
+  .nav ul{gap:22px;}
+  .nav a{font-size:15px;padding:12px 4px;}
+  .portfolio-main{margin:10px auto;}
+  .arrow-left{left:4px;}
+  .arrow-right{right:4px;}
+  .portfolio-thumbs{padding:0 8px;}
+  .portfolio-thumbs img,.portfolio-thumbs video{height:64px;}
+}
+</style>
 </head>
 <body>
-
-<header>
-  <nav>
-    <a href="#" class="active" data-go="home">Home</a>
-    <a href="#" data-go="portfolio">Portfolio</a>
-    <a href="#" data-go="about">About</a>
-    <a href="#" data-go="contact">Contact</a>
-  </nav>
+<header class="header">
+  <h1 class="site-title">CORDIE;</h1>
+  <div class="nav-wrap">
+    <nav class="nav">
+      <ul>
+        <li><a href="#" class="active" data-go="home">Home</a></li>
+        <li><a href="#" data-go="portfolio">Portfolio</a></li>
+        <li><a href="#" data-go="about">About</a></li>
+        <li><a href="#" data-go="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <main>
-  <!-- HOME -->
   <section class="page active" id="page-home">
     <section class="hero section">
       <video id="homeVideo" autoplay loop playsinline controls>
@@ -71,36 +107,54 @@
 
 何かに追われるんじゃなくて、何かを夢中で追っていた日々を。
 何かを思い出すために。</section>
+  .videos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .video-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    }
+
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    @media (max-width: 480px) {
+      .title { font-size: 1.35rem; }
+      nav { gap: 10px; }
+      .section { padding: 22px 14px 30px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
   </section>
 
-  <!-- PORTFOLIO (YouTube) -->
-    <!-- PORTFOLIO (YouTube + Gallery) -->
   <section class="page" id="page-portfolio">
-    <div class="container" style="padding:24px 0 36px;">
+    <section class="section">
+      <div class="portfolio-main">
+        <span class="arrow arrow-left">&#10094;</span>
+        <img id="mainImage" src="11111.png" style="display:block">
+        <video id="mainVideo" style="display:none" controls></video>
+        <span class="arrow arrow-right">&#10095;</span>
+      </div>
 
-      <!-- YouTube -->
-      <h2 style="margin:4px 0 14px;">Videos</h2>
-      <div class="videos">
-          <div class="video-wrap">
-            <iframe src="https://www.youtube.com/embed/lWCJ4D3CkvY" allowfullscreen></iframe>
-          </div>
-          <div class="video-wrap">
-            <iframe src="https://www.youtube.com/embed/6IrrJPv8wAg" allowfullscreen></iframe>
-          </div>
-          <div class="video-wrap">
-            <iframe src="https://www.youtube.com/embed/mLZKyQDoo0Y" allowfullscreen></iframe>
-          </div>
-          <div class="video-wrap">
-            <iframe src="https://www.youtube.com/embed/khdmv9MIlUg" allowfullscreen></iframe>
-          </div>
-          <div class="video-wrap">
-            <iframe src="https://www.youtube.com/embed/9W7SKpAJ6B0" allowfullscreen></iframe>
-          </div>
-        </div>
-
-        <div class="gallery">
-          <h3>Gallery</h3>
-          <div class="portfolio-thumbs" id="thumbContainer">
+      <div class="portfolio-thumbs" id="thumbContainer">
         <img src="11111.png" data-type="image" data-src="11111.png">
         <img src="22222.png" data-type="image" data-src="22222.png">
         <img src="112233.png" data-type="image" data-src="112233.png">
@@ -111,47 +165,121 @@
         <img src="insta1.jpg" data-type="image" data-src="insta1.jpg">
         <img src="insta2.jpg" data-type="image" data-src="insta2.jpg">
         <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
-        <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
-</div>
-        </div>
+        <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">      
+      
+        <section id="portfolio" class="section">
+    <h2 class="title">Portfolio</h2>
+    <div class="videos">
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/lWCJ4D3CkvY" allowfullscreen></iframe>
+      </div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/6IrrJPv8wAg" allowfullscreen></iframe>
+      </div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/mLZKyQDoo0Y" allowfullscreen></iframe>
+      </div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/khdmv9MIlUg" allowfullscreen></iframe>
+      </div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/9W7SKpAJ6B0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
       </div>
     </section>
   </section>
 
-  <!-- ABOUT -->
   <section class="page" id="page-about">
-    <h2>About</h2>
-    <p>Started career as an Art/Creative Director in 2022...</p>
+    <section class="section">
+      <div class="container">
+        <p>Started career as an Art/Creative Director in 2022...</p>
+      </div>
+    </section>
   </section>
 
-  <!-- CONTACT -->
   <section class="page" id="page-contact">
-    <h2>Contact</h2>
-    <p>Instagram: @y_kkk_0618</p>
-    <p>G-mail: cordieofficial469499@gmail.com</p>
+    <section class="section">
+      <div class="container">
+        <p>Instagram: @y_kkk_0618</p>
+        <p>G-mail: cordieofficial469499@gmail.com</p>
+      </div>
+    </section>
   </section>
 </main>
 
+<div class="modal" id="modal">
+  <span class="modal-close" id="modalClose">&times;</span>
+  <span class="modal-arrow modal-arrow-left" id="modalPrev">&#10094;</span>
+  <img class="modal-content" id="modalImage" style="display:none">
+  <video class="modal-content" id="modalVideo" controls style="display:none"></video>
+  <span class="modal-arrow modal-arrow-right" id="modalNext">&#10095;</span>
+</div>
+
 <script>
-  // simple page switch
-  const links = document.querySelectorAll('[data-go]');
-  const pages = document.querySelectorAll('.page');
+// page switch
+const links=document.querySelectorAll("[data-go]");
+const pages=document.querySelectorAll(".page");
+const homeVideo=document.getElementById("homeVideo");
+links.forEach(l=>{l.addEventListener("click",e=>{e.preventDefault();links.forEach(x=>x.classList.remove("active"));l.classList.add("active");links.forEach(x=>{x.style.color=(x.classList.contains("active"))?'black':'#aaa';});const t=l.dataset.go;pages.forEach(p=>p.classList.remove("active"));document.getElementById(`page-${t}`).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(t!=="home"){homeVideo.pause();homeVideo.currentTime=0;}else{homeVideo.play();}});});
 
-  links.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
+// portfolio gallery
+const mainImg=document.getElementById("mainImage");
+const mainVid=document.getElementById("mainVideo");
+const thumbs=document.querySelectorAll("#thumbContainer img,#thumbContainer video");
+let currentIndex=0;
+function showMain(i){if(i<0)i=thumbs.length-1;if(i>=thumbs.length)i=0;currentIndex=i;const item=thumbs[i];if(item.dataset.type==="image"){mainImg.src=item.dataset.src;mainImg.style.display="block";mainVid.style.display="none";mainVid.pause();mainVid.currentTime=0;}else{mainVid.src=item.dataset.src;mainVid.style.display="block";mainVid.play();mainImg.style.display="none";}}
 
-      links.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
+document.querySelector(".arrow-left").addEventListener("click",()=>showMain(currentIndex-1));
+document.querySelector(".arrow-right").addEventListener("click",()=>showMain(currentIndex+1));
+thumbs.forEach((t,idx)=>t.addEventListener("click",()=>showMain(idx)));
 
-      const target = link.dataset.go;
-      pages.forEach(p => p.classList.remove('active'));
-      document.getElementById(`page-${target}`).classList.add('active');
+// modal
+const modal=document.getElementById("modal");
+const modalImage=document.getElementById("modalImage");
+const modalVideo=document.getElementById("modalVideo");
+const modalClose=document.getElementById("modalClose");
+const modalPrev=document.getElementById("modalPrev");
+const modalNext=document.getElementById("modalNext");
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
+function openModal(i){
+  showMain(i);
+  modal.classList.add("show");
+  const t=thumbs[i].dataset.type;
+
+  modalImage.style.display="none";
+  modalVideo.style.display="none";
+  modalYoutube.style.display="none";
+
+  if(t==="image"){
+    modalImage.src=thumbs[i].dataset.src;
+    modalImage.style.display="block";
+  }else if(t==="video"){
+    modalVideo.src=thumbs[i].dataset.src;
+    modalVideo.style.display="block";
+    modalVideo.play();
+  }else if(t==="youtube"){
+    modalYoutube.src=thumbs[i].dataset.src+"?autoplay=1";
+    modalYoutube.style.display="block";
+  }
+}else if(type==="video"){
+    modalVideo.src=src;
+    modalVideo.style.display="block";
+    modalVideo.play();
+  }else if(type==="youtube"){
+    modalYT.src=src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
+    modalYT.style.display="block";
+  }
+}
+
+mainImg.addEventListener("click",()=>openModal(currentIndex));
+mainVid.addEventListener("click",()=>openModal(currentIndex));
+modalClose.addEventListener("click",()=>modal.classList.remove("show"));
+modalPrev.addEventListener("click",()=>openModal(currentIndex-1));
+modalNext.addEventListener("click",()=>openModal(currentIndex+1));
+modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("show");});
 </script>
-
 </body>
 </html>
