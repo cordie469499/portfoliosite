@@ -93,7 +93,8 @@ main{padding-top:0;}
 だけど優しく温かいそんな感じ。
 
 何かに追われるんじゃなくて、何かを夢中で追っていた日々を。
-何かを思い出すために。</section>
+何かを思い出すために。
+    </section>
   </section>
 
   <section class="page" id="page-portfolio">
@@ -159,7 +160,7 @@ main{padding-top:0;}
 const links=document.querySelectorAll("[data-go]");
 const pages=document.querySelectorAll(".page");
 const homeVideo=document.getElementById("homeVideo");
-links.forEach(l=>{l.addEventListener("click",e=>{e.preventDefault();links.forEach(x=>x.classList.remove("active"));l.classList.add("active");links.forEach(x=>{x.style.color=(x.classList.contains("active"))?'black':'#aaa';});const t=l.dataset.go;pages.forEach(p=>p.classList.remove("active"));document.getElementById(`page-${t}`).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(t!=="home"){homeVideo.pause();homeVideo.currentTime=0;}else{homeVideo.play();}});});
+links.forEach(l=>{l.addEventListener("click",e=>{e.preventDefault();links.forEach(x=>x.classList.remove("active"));l.classList.add("active");links.forEach(x=>{x.style.color=(x.classList.contains("active"))?'black':'#aaa';});const t=l.dataset.go;pages.forEach(p=>p.classList.remove("active"));document.getElementById(page-${t}).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(t!=="home"){homeVideo.pause();homeVideo.currentTime=0;}else{homeVideo.play();}});});
 
 // portfolio gallery
 const mainImg=document.getElementById("mainImage");
