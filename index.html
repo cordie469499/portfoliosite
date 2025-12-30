@@ -1,124 +1,193 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;700&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Bodoni Moda", serif;
-      background:#fafafa;
-      color:#111;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Bodoni Moda",serif;color:#000;background:#fff;line-height:1.7;}
+img,video{display:block;max-width:100%;height:auto;border-radius:0;}
+a{text-decoration:none;color:inherit;}
 
-    /* --- NAV --- */
-    header {
-      border-top:1px solid #111;
-      border-bottom:1px solid #111;
-      padding:10px 18px;
-    }
+.container{max-width:900px;margin:0 auto;padding:0 24px;}
+.section{padding:0.4mm 0;}
+.header{width:100%;background:#fff;}
+.site-title{font-size:44px;letter-spacing:.04em;margin:22px 0 18px;padding:0 24px;color:#000;}
 
-    nav {
-      max-width:1080px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
+/* nav */
+.nav-wrap{position:relative;max-width:900px;margin:0 auto;padding:0 24px;}
+.nav-wrap::before,.nav-wrap::after{content:"";position:absolute;left:0;right:0;height:1px;background:#ccc;}
+.nav-wrap::before{top:0;}
+.nav-wrap::after{bottom:0;}
+.nav{display:flex;justify-content:center;}
+.nav ul{display:flex;gap:40px;list-style:none;}
+.nav a{display:block;padding:14px 6px;font-size:17px;font-weight:400;color:#aaa;transition:.2s;}
+.nav a.active{color:#000;}
 
-    .logo { font-size:22px; letter-spacing:1px; }
+/* hero */
+.hero{display:flex;justify-content:center;margin:2.5mm 0;}
+.hero img,.hero video{width:100%;height:auto;}
 
-    .menu {
-      list-style:none;
-      display:flex;
-      gap:22px;
-      margin:0;
-      padding:0;
-      font-size:14px;
-    }
+.home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
 
-    .menu a {
-      text-decoration:none;
-      color:#111;
-    }
+/* portfolio */
+.portfolio-main{position:relative;display:flex;justify-content:center;margin:2.5mm auto;max-width:900px;}
+.portfolio-main img,.portfolio-main video{display:block;max-width:100%;height:auto;cursor:grab;}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:30px;cursor:pointer;color:gray;font-weight:bold;user-select:none;z-index:50;}
+.arrow-left{left:-40px;}
+.arrow-right{right:-40px;}
 
-    .menu a:hover { opacity:.65; }
+.portfolio-thumbs{display:flex;gap:5px;overflow-x:auto;margin-top:5px;max-width:900px;margin-left:auto;margin-right:auto;}
+.portfolio-thumbs img,.portfolio-thumbs video{height:80px;width:auto;cursor:pointer;flex-shrink:0;object-fit:cover;}
 
-    /* --- HERO --- */
-    .hero {
-      max-width:1080px;
-      margin:40px auto 60px;
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:20px;
-    }
+#page-about .container,#page-contact .container{max-width:700px;margin:0 auto;padding:40px 20px;text-align:center;line-height:1.8;}
+#page-about p,#page-contact p{margin-bottom:16px;font-size:18px;}
 
-    .hero img {
-      width:100%;
-      height:360px;
-      object-fit:cover;
-      border-radius:14px;
-    }
+.page{display:none;}
+.page.active{display:block;}
+main{padding-top:0;}
 
-    /* --- SECTION --- */
-    section {
-      max-width:860px;
-      margin:0 auto 80px;
-      padding:0 16px;
-      line-height:1.75;
-    }
-
-    h2 { font-size:18px; letter-spacing:.05em; margin:0 0 12px; }
-
-    footer {
-      border-top:1px solid #111;
-      padding:14px 18px 24px;
-      text-align:center;
-      font-size:12px;
-      color:#666;
-    }
-  </style>
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;}
+.modal.show{display:flex;}
+.modal-content{max-width:90%;max-height:90%;}
+.modal-close{position:absolute;top:10px;right:10px;font-size:30px;cursor:pointer;color:#fff;z-index:101;}
+.modal-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;z-index:101;user-select:none;}
+.modal-arrow-left{left:20px;}
+.modal-arrow-right{right:20px;}
+</style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo">Portfolio</div>
-      <ul class="menu">
-        <li><a href="#works">WORKS</a></li>
-        <li><a href="#profile">PROFILE</a></li>
-        <li><a href="#contact">CONTACT</a></li>
+<header class="header">
+  <h1 class="site-title">CORDIE;</h1>
+  <div class="nav-wrap">
+    <nav class="nav">
+      <ul>
+        <li><a href="#" class="active" data-go="home">Home</a></li>
+        <li><a href="#" data-go="portfolio">Portfolio</a></li>
+        <li><a href="#" data-go="about">About</a></li>
+        <li><a href="#" data-go="contact">Contact</a></li>
       </ul>
     </nav>
-  </header>
-
-  <!-- ここは photo フォルダを使わず、直接画像URLを指定 -->
-  <div class="hero">
-    <img src="https://picsum.photos/id/1011/900/600" alt="visual 1" />
-    <img src="https://picsum.photos/id/1025/900/600" alt="visual 2" />
-    <img src="https://picsum.photos/id/1035/900/600" alt="visual 3" />
-    <img src="https://picsum.photos/id/1041/900/600" alt="visual 4" />
   </div>
+</header>
 
-  <section id="works">
-    <h2>WORKS</h2>
-    <p>ここに制作実績の説明テキストが入ります。各プロジェクトの意図や役割、成果を短くまとめていきます。</p>
+<main>
+  <section class="page active" id="page-home">
+    <section class="hero section">
+      <video id="homeVideo" autoplay loop playsinline controls>
+        <source src="video/0801.mp4" type="video/mp4">
+      </video>
+    </section>
+    <section class="home-text">[原風景]
+
+喧騒の中で日々を消費されている時、
+ふと、大事な何かを忘れているような気がした。
+
+お金とか仕事とか地位とか名誉とかそんなのじゃなくて、
+もっと自分の原点・核にある何か大事なものを。
+
+懐かしいような、どこか寂しいような、
+だけど優しく温かいそんな感じ。
+
+何かに追われるんじゃなくて、何かを夢中で追っていた日々を。
+何かを思い出すために。</section>
   </section>
 
-  <section id="profile">
-    <h2>PROFILE</h2>
-    <p>自己紹介や経歴、得意分野などを記載します。シンプルに、読みやすく。</p>
+  <section class="page" id="page-portfolio">
+    <section class="section">
+      <div class="portfolio-main">
+        <span class="arrow arrow-left">&#10094;</span>
+        <img id="mainImage" src="11111.png" style="display:block">
+        <video id="mainVideo" style="display:none" controls></video>
+        <span class="arrow arrow-right">&#10095;</span>
+      </div>
+
+      <div class="portfolio-thumbs" id="thumbContainer">
+        <img src="11111.png" data-type="image" data-src="11111.png">
+        <img src="22222.png" data-type="image" data-src="22222.png">
+        <img src="112233.png" data-type="image" data-src="112233.png">
+        <img src="5DE.JPG" data-type="image" data-src="5DE.JPG">
+        <img src="E12.JPG" data-type="image" data-src="E12.JPG">
+        <img src="enter1.png" data-type="image" data-src="enter1.png">
+        <img src="F96.JPG" data-type="image" data-src="F96.JPG">
+        <img src="insta1.jpg" data-type="image" data-src="insta1.jpg">
+        <img src="insta2.jpg" data-type="image" data-src="insta2.jpg">
+        <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
+        <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
+
+        <video src="video/ティザー1_1.mp4" data-type="video" data-src="video/ティザー1_1.mp4" autoplay muted loop playsinline></video>
+        <video src="video/0916.MP4" data-type="video" data-src="video/0916.MP4" autoplay muted loop playsinline></video>
+        <video src="video/teaser4 2.MP4" data-type="video" data-src="video/teaser4 2.MP4" autoplay muted loop playsinline></video>
+        <video src="video/ティザー2.mp4" data-type="video" data-src="video/ティザー2.mp4" autoplay muted loop playsinline></video>
+        <video src="video/ティザー3.mp4" data-type="video" data-src="video/ティザー3.mp4" autoplay muted loop playsinline></video>
+        <video src="video/開演前ショートムービー001.mp4" data-type="video" data-src="video/開演前ショートムービー001.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </section>
   </section>
 
-  <section id="contact">
-    <h2>CONTACT</h2>
-    <p>お問い合わせ先（メール・SNS など）を記載してください。</p>
+  <section class="page" id="page-about">
+    <section class="section">
+      <div class="container">
+        <p>Started career as an Art/Creative Director in 2022...</p>
+      </div>
+    </section>
   </section>
 
-  <footer>
-    © Portfolio — All Rights Reserved
-  </footer>
+  <section class="page" id="page-contact">
+    <section class="section">
+      <div class="container">
+        <p>Instagram: @y_kkk_0618</p>
+        <p>G-mail: cordieofficial469499@gmail.com</p>
+      </div>
+    </section>
+  </section>
+</main>
+
+<div class="modal" id="modal">
+  <span class="modal-close" id="modalClose">&times;</span>
+  <span class="modal-arrow modal-arrow-left" id="modalPrev">&#10094;</span>
+  <img class="modal-content" id="modalImage" style="display:none">
+  <video class="modal-content" id="modalVideo" controls style="display:none"></video>
+  <span class="modal-arrow modal-arrow-right" id="modalNext">&#10095;</span>
+</div>
+
+<script>
+// page switch
+const links=document.querySelectorAll("[data-go]");
+const pages=document.querySelectorAll(".page");
+const homeVideo=document.getElementById("homeVideo");
+links.forEach(l=>{l.addEventListener("click",e=>{e.preventDefault();links.forEach(x=>x.classList.remove("active"));l.classList.add("active");links.forEach(x=>{x.style.color=(x.classList.contains("active"))?'black':'#aaa';});const t=l.dataset.go;pages.forEach(p=>p.classList.remove("active"));document.getElementById(`page-${t}`).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(t!=="home"){homeVideo.pause();homeVideo.currentTime=0;}else{homeVideo.play();}});});
+
+// portfolio gallery
+const mainImg=document.getElementById("mainImage");
+const mainVid=document.getElementById("mainVideo");
+const thumbs=document.querySelectorAll("#thumbContainer img,#thumbContainer video");
+let currentIndex=0;
+function showMain(i){if(i<0)i=thumbs.length-1;if(i>=thumbs.length)i=0;currentIndex=i;const item=thumbs[i];if(item.dataset.type==="image"){mainImg.src=item.dataset.src;mainImg.style.display="block";mainVid.style.display="none";mainVid.pause();mainVid.currentTime=0;}else{mainVid.src=item.dataset.src;mainVid.style.display="block";mainVid.play();mainImg.style.display="none";}}
+
+document.querySelector(".arrow-left").addEventListener("click",()=>showMain(currentIndex-1));
+document.querySelector(".arrow-right").addEventListener("click",()=>showMain(currentIndex+1));
+thumbs.forEach((t,idx)=>t.addEventListener("click",()=>showMain(idx)));
+
+// modal
+const modal=document.getElementById("modal");
+const modalImage=document.getElementById("modalImage");
+const modalVideo=document.getElementById("modalVideo");
+const modalClose=document.getElementById("modalClose");
+const modalPrev=document.getElementById("modalPrev");
+const modalNext=document.getElementById("modalNext");
+
+function openModal(i){showMain(i);modal.classList.add("show");if(thumbs[i].dataset.type==="image"){modalImage.src=thumbs[i].dataset.src;modalImage.style.display="block";modalVideo.style.display="none";}else{modalVideo.src=thumbs[i].dataset.src;modalVideo.style.display="block";modalImage.style.display="none";modalVideo.play();}}
+
+mainImg.addEventListener("click",()=>openModal(currentIndex));
+mainVid.addEventListener("click",()=>openModal(currentIndex));
+modalClose.addEventListener("click",()=>modal.classList.remove("show"));
+modalPrev.addEventListener("click",()=>openModal(currentIndex-1));
+modalNext.addEventListener("click",()=>openModal(currentIndex+1));
+modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("show");});
+</script>
 </body>
 </html>
