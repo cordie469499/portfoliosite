@@ -194,19 +194,24 @@ const modalNext=document.getElementById("modalNext");
 function openModal(i){
   showMain(i);
   modal.classList.add("show");
-  const type=thumbs[i].dataset.type;
-  const src=thumbs[i].dataset.src;
+  const t=thumbs[i].dataset.type;
 
-  // reset
   modalImage.style.display="none";
-  modalVideo.style.display="none"; modalVideo.pause(); modalVideo.currentTime=0;
-  const modalYT=document.getElementById("modalYT");
-  modalYT.style.display="none"; modalYT.src="";
+  modalVideo.style.display="none";
+  modalYoutube.style.display="none";
 
-  if(type==="image"){
-    modalImage.src=src;
+  if(t==="image"){
+    modalImage.src=thumbs[i].dataset.src;
     modalImage.style.display="block";
-  }else if(type==="video"){
+  }else if(t==="video"){
+    modalVideo.src=thumbs[i].dataset.src;
+    modalVideo.style.display="block";
+    modalVideo.play();
+  }else if(t==="youtube"){
+    modalYoutube.src=thumbs[i].dataset.src+"?autoplay=1";
+    modalYoutube.style.display="block";
+  }
+}else if(type==="video"){
     modalVideo.src=src;
     modalVideo.style.display="block";
     modalVideo.play();
