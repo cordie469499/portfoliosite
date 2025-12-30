@@ -185,7 +185,71 @@ const mainImg = document.getElementById("mainImage");
 const mainVid = document.getElementById("mainVideo");
 const thumbs = document.querySelectorAll("#thumbContainer img, #thumbContainer video");
 let currentIndex = 0;
+<style>
+/* 既存のスタイルはそのまま */
 
+@media screen and (max-width: 768px) {
+  .container {
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .site-title {
+    font-size:28px;
+    padding-left:10px;
+  }
+  .nav-wrap {
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .nav ul {
+    flex-direction: column;
+    width:100%;
+    margin-left:0;
+  }
+  .nav a {
+    padding:10px 5px;
+    font-size:16px;
+  }
+  .hero img, .hero video {
+    width:100%;
+  }
+  .portfolio-main {
+    margin-left:0;
+    margin-right:0;
+    max-width:100%;
+  }
+  .arrow-left, .arrow-right {
+    font-size:24px;
+    left:5px;
+    right:5px;
+  }
+  .portfolio-thumbs {
+    gap:4px;
+    max-width:100%;
+    margin-left:0;
+    margin-right:0;
+    justify-content:flex-start;
+  }
+  .portfolio-thumbs img, .portfolio-thumbs video {
+    height:60px;
+  }
+  .home-text {
+    font-size:16px;
+    padding:5px 8px;
+  }
+  #page-about .container, #page-contact .container {
+    padding:20px 10px;
+    font-size:16px;
+  }
+  .modal-content {
+    max-width:95%;
+    max-height:80%;
+  }
+  .modal-arrow {
+    font-size:30px;
+  }
+}
+</style>
 function showMain(index){
   if(index < 0) index = thumbs.length - 1;
   if(index >= thumbs.length) index = 0;
@@ -229,7 +293,33 @@ function openModal(index){
     modalVideo.style.display = "block";
     modalVideo.play();
     modalImage.style.display = "none";
+  <script>
+// スワイプでPortfolio切替（スマホ対応）
+let touchStartX = 0;
+let touchEndX = 0;
+const mainWrapper = document.querySelector(".portfolio-main");
+
+mainWrapper.addEventListener("touchstart", e => {
+  touchStartX = e.changedTouches[0].screenX;
+}, false);
+
+mainWrapper.addEventListener("touchend", e => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, false);
+
+function handleSwipe() {
+  const threshold = 50; // スワイプ判定の最小距離(px)
+  if(touchEndX < touchStartX - threshold){
+    // 左スワイプ → 次の画像
+    showMain(currentIndex + 1);
   }
+  if(touchEndX > touchStartX + threshold){
+    // 右スワイプ → 前の画像
+    showMain(currentIndex - 1);
+  }
+}
+</script>}
   currentIndex = index;
 }
 
