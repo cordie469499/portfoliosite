@@ -144,17 +144,7 @@ main{padding-top:0;}
   <img src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
 </div>
 
-      <section id="portfolio-videos" class="section">
-        <h2 class="title">Portfolio</h2>
-        <p class="desc">作品はYouTubeで再生できます。（アイフォンでも崩れません）</p>
-        <div class="videos">
-          <div class="video-wrap"><iframe src="https://www.youtube.com/embed/lWCJ4D3CkvY" allowfullscreen></iframe></div>
-          <div class="video-wrap"><iframe src="https://www.youtube.com/embed/6IrrJPv8wAg" allowfullscreen></iframe></div>
-          <div class="video-wrap"><iframe src="https://www.youtube.com/embed/mLZKyQDoo0Y" allowfullscreen></iframe></div>
-          <div class="video-wrap"><iframe src="https://www.youtube.com/embed/khdmv9MIlUg" allowfullscreen></iframe></div>
-          <div class="video-wrap"><iframe src="https://www.youtube.com/embed/9W7SKpAJ6B0" allowfullscreen></iframe></div>
-        </div>
-      </section>
+      
     </section>
   </section>
 
@@ -180,7 +170,7 @@ main{padding-top:0;}
   <span class="modal-close" id="modalClose">&times;</span>
   <span class="modal-arrow modal-arrow-left" id="modalPrev">&#10094;</span>
   <img class="modal-content" id="modalImage" style="display:none">
-  <video class="modal-content" id="modalVideo" controls style="display:none"></video>
+  <iframe class="modal-content" id="modalFrame" style="display:none" allowfullscreen></iframe>
   <span class="modal-arrow modal-arrow-right" id="modalNext">&#10095;</span>
 </div>
 
@@ -210,118 +200,72 @@ links.forEach(l=>{
 // portfolio gallery (images + YouTube in the same gallery)
 const mainImg=document.getElementById('mainImage');
 const mainVid=document.getElementById('mainVideo');
-const thumbs=document.querySelectorAll('#thumbContainer img, #thumbContainer video');
+const thumbs=document.querySelectorAll('#thumbContainer img,#thumbContainer video');
 let currentIndex=0;
 
 function showMain(i){
   if(i<0) i=thumbs.length-1;
   if(i>=thumbs.length) i=0;
   currentIndex=i;
-  const item=thumbs[i];
+  const t=thumbs[i];
 
-  if(item.dataset.type==='image'){
+  if(t.dataset.type==='image'){
     mainVid.style.display='none';
-    mainVid.pause?.();
-    mainVid.src='';
     mainImg.style.display='block';
-    mainImg.src=item.dataset.src;
-  }else{ // YouTube (embed)
-    mainImg.style.display='none';
-    mainVid.style.display='block';
-    mainVid.src=item.dataset.src + (item.dataset.src.includes('?')?'&':'?') + 'autoplay=1&mute=1';
+    mainImg.src=t.dataset.src;
+  }else if(t.dataset.type==='video'){
+    // YouTubeはメイン画面では表示しない（クリック→モーダルで再生）
+    openModal(i);
   }
 }
 
+// arrows
+ document.querySelector('.arrow-left').onclick = ()=>showMain(currentIndex-1);
+ document.querySelector('.arrow-right').onclick = ()=>showMain(currentIndex+1);
+
+// thumbs click
 thumbs.forEach((t,i)=>{
-  t.addEventListener('click',()=>showMain(i));
+  t.addEventListener('click',()=>{
+    showMain(i);
+  });
 });
 
-document.querySelector('.arrow-left').addEventListener('click',()=>showMain(currentIndex-1));
-document.querySelector('.arrow-right').addEventListener('click',()=>showMain(currentIndex+1));
-
-// modal (tap to enlarge)
+// modal
 const modal=document.getElementById('modal');
 const modalImg=document.getElementById('modalImage');
-const modalVideo=document.getElementById('modalVideo');
+const modalFrame=document.getElementById('modalFrame');
 const modalClose=document.getElementById('modalClose');
 const modalPrev=document.getElementById('modalPrev');
 const modalNext=document.getElementById('modalNext');
 
 function openModal(i){
   currentIndex=i;
-  const item=thumbs[i];
+  const t=thumbs[i];
   modal.classList.add('show');
 
-  if(item.dataset.type==='image'){
-    modalVideo.style.display='none';
-    modalVideo.src='';
+  if(t.dataset.type==='image'){
+    modalFrame.style.display='none';
     modalImg.style.display='block';
-    modalImg.src=item.dataset.src;
+    modalImg.src=t.dataset.src;
   }else{
     modalImg.style.display='none';
-    modalVideo.style.display='block';
-    modalVideo.src=item.dataset.src + (item.dataset.src.includes('?')?'&':'?') + 'autoplay=1';
+    modalFrame.style.display='block';
+    modalFrame.src=t.dataset.src + '?autoplay=1&rel=0';
   }
 }
-
-thumbs.forEach((t,i)=>{
-  t.addEventListener('dblclick',()=>openModal(i));
-});
 
 function closeModal(){
   modal.classList.remove('show');
-  modalVideo.src='';
+  modalFrame.src='';
 }
 
-modalClose.addEventListener('click',closeModal);
-modal.addEventListener('click',e=>{if(e.target===modal) closeModal();});
-modalPrev.addEventListener('click',()=>openModal((currentIndex-1+thumbs.length)%thumbs.length));
-modalNext.addEventListener('click',()=>openModal((currentIndex+1)%thumbs.length));
+modalClose.onclick=closeModal;
+modal.onclick=(e)=>{if(e.target===modal) closeModal();};
+modalPrev.onclick=()=>openModal(currentIndex-1<0?thumbs.length-1:currentIndex-1);
+modalNext.onclick=()=>openModal((currentIndex+1)%thumbs.length);
 
-// 初期表示
 showMain(0);
-// === PATCH: thumbnail modal + arrows (YouTube 再生対応) ===
-(function(){
-  const thumbs = document.querySelectorAll('#thumbContainer img');
-  const modal = document.getElementById('modal');
-  const modalImage = document.getElementById('modalImage');
-  const modalVideo = document.getElementById('modalVideo');
-  const modalClose = document.getElementById('modalClose');
-  const modalPrev = document.getElementById('modalPrev');
-  const modalNext = document.getElementById('modalNext');
-  let currentIndex = 0;
 
-  function openByIndex(idx){
-    if(idx < 0) idx = thumbs.length-1;
-    if(idx >= thumbs.length) idx = 0;
-    currentIndex = idx;
-    const t = thumbs[idx];
-    const type = t.dataset.type;
-    const src = t.dataset.src;
-    if(type === 'image'){
-      modalImage.src = src;
-      modalImage.style.display = 'block';
-      modalVideo.style.display = 'none';
-      modalVideo.src = '';
-    } else {
-      modalVideo.src = src + '?autoplay=1';
-      modalVideo.style.display = 'block';
-      modalImage.style.display = 'none';
-    }
-    modal.classList.add('show');
-  }
-
-  thumbs.forEach((t,i)=>{
-    t.addEventListener('click',()=>openByIndex(i));
-  });
-
-  modalPrev.addEventListener('click',()=>openByIndex(currentIndex-1));
-  modalNext.addEventListener('click',()=>openByIndex(currentIndex+1));
-  modalClose.addEventListener('click',()=>{
-    modal.classList.remove('show');
-    modalVideo.src='';
-  });
-})();
 </script>
 <script>
 // -------- Lightbox for Image + YouTube --------
