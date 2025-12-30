@@ -4,101 +4,89 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Portfolio</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;400;500&display=swap" rel="stylesheet">
-
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"Bodoni Moda",serif;color:#000;background:#fff;line-height:1.7;}
-img,video{display:block;max-width:100%;height:auto;}
-a{text-decoration:none;color:inherit;}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:"Bodoni Moda", serif; color:black; background:#fff; line-height:1.7; }
+img, video { display:block; max-width:100%; height:auto; border-radius:0; }
+a { text-decoration:none; color:inherit; }
 
-.container{max-width:900px;margin:0 auto;padding-left:60mm;padding-right:60mm;}
-.section{padding-top:0.4mm;padding-bottom:0.4mm;}
+.container { max-width:900px; margin:0 auto; padding-left:60mm; padding-right:60mm; }
+.section { padding-top:0.4mm; padding-bottom:0.4mm; }
+.header { width:100%; background:#fff; }
+.site-title { font-size:44px; letter-spacing:.04em; margin:22px 0 18px; padding-left:60mm; color:black; }
+.nav-wrap { position:relative; padding-left:60mm; padding-right:60mm; }
 
-.header{width:100%;background:#fff;}
-.site-title{font-size:44px;letter-spacing:.04em;margin:22px 0 18px;padding-left:60mm;color:#000;}
+.nav a { display:block; padding:14px 6px; font-size:17px; font-weight:400; color:#aaa; transition: all 0.2s; }
+.nav a.active { color:black; font-weight:400; }
+/* ナビ全体（左右は“余白”として扱う） */
+.nav-wrap{
+  position:relative;
+  max-width:900px;
+  margin:0 auto;
+  padding:0 24px;
+}
 
-.nav-wrap{position:relative;padding-left:60mm;padding-right:60mm;}
+/* 上下の線（フル幅でOK） */
 .nav-wrap::before,
-.nav-wrap::after{content:"";position:absolute;height:1px;background:#ccc;left:0;right:0;}
-.nav-wrap::before{top:0;margin-left:60mm;margin-right:60mm;}
-.nav-wrap::after{bottom:0;margin-left:60mm;margin-right:60mm;}
+.nav-wrap::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  height:1px;
+  background:#ccc;
+}
+.nav-wrap::before{ top:0; }
+.nav-wrap::after{ bottom:0; }
 
+/* ナビ本体 */
 .nav{
   display:flex;
   justify-content:center;
 }
 
+/* リストを“中央に横並び” */
 .nav ul{
   display:flex;
   gap:40px;
   list-style:none;
   margin:0;
+  padding:0;
 }
-  
-.nav a{display:block;padding:14px 6px;font-size:17px;font-weight:400;color:#aaa;transition:.2s;}
-.nav a.active{color:#000;}
+.hero { display:flex; justify-content:center; margin-top:2.5mm; margin-bottom:2.5mm; }
+.hero img, .hero video { width:calc(100% - 120mm); height:auto; }
+.home-text { text-align:center; padding:5px; max-width:800px; margin:0 auto; font-size:18px; line-height:1.8; color:black; white-space:pre-line; }
 
-.hero{display:flex;justify-content:center;margin:2.5mm 0;}
-.hero img,.hero video{width:calc(100% - 120mm);}
+.portfolio-main { position:relative; display:flex; justify-content:center; margin-top:2.5mm; margin-bottom:2.5mm; max-width:calc(100% - 120mm); margin-left:auto; margin-right:auto; }
+.portfolio-main img, .portfolio-main video { display:block; max-width:100%; height:auto; cursor:grab; }
+.arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:30px; cursor:pointer; color:gray; font-weight:bold; user-select:none; z-index:50; }
+.arrow-left { left:-40px; }
+.arrow-right { right:-40px; }
 
-.home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
+.portfolio-thumbs { display:flex; gap:5px; overflow-x:auto; margin-top:5px; max-width:calc(100% - 120mm); margin-left:auto; margin-right:auto; justify-content:flex-start; }
+.portfolio-thumbs img, .portfolio-thumbs video { height:80px; width:auto; cursor:pointer; flex-shrink:0; object-fit:cover; }
 
-.portfolio-main{position:relative;display:flex;justify-content:center;margin:2.5mm auto;max-width:calc(100% - 120mm);}
-.portfolio-main img,.portfolio-main video{max-width:100%;cursor:grab;}
-.arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:30px;cursor:pointer;color:gray;font-weight:bold;user-select:none;z-index:50;}
-.arrow-left{left:-40px;}
-.arrow-right{right:-40px;}
-
-.portfolio-thumbs{display:flex;gap:5px;overflow-x:auto;margin-top:5px;max-width:calc(100% - 120mm);margin-left:auto;margin-right:auto;}
-.portfolio-thumbs img,.portfolio-thumbs video{height:80px;width:auto;cursor:pointer;flex-shrink:0;object-fit:cover;}
-
-#page-about .container,#page-contact .container{max-width:700px;margin:0 auto;padding:40px 20px;text-align:center;line-height:1.8;}
-#page-about p,#page-contact p{margin-bottom:16px;font-size:18px;}
-
-.page{display:none;}
-.page.active{display:block;}
-main{padding-top:0;}
+#page-about .container, #page-contact .container { max-width:700px; margin:0 auto; padding:40px 20px; text-align:center; line-height:1.8; }
+#page-about p, #page-contact p { margin-bottom:16px; font-size:18px; }
+.page { display:none; }
+.page.active { display:block; }
+main { padding-top:0; }
 
 /* モーダル */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;}
-.modal.show{display:flex;}
-.modal-content{max-width:90%;max-height:90%;}
-.modal-close{position:absolute;top:10px;right:10px;font-size:30px;cursor:pointer;color:#fff;}
-.modal-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;user-select:none;}
-.modal-arrow-left{left:20px;}
-.modal-arrow-right{right:20px;}
-
-/* ここがスマホ用（正しい場所に移動済み） */
-@media screen and (max-width:768px){
-  .container{padding:0 10px;}
-  .site-title{font-size:28px;padding-left:10px;}
-  .nav-wrap{padding-left:10px;padding-right:10px;}
-  .nav ul{flex-direction:column;width:100%;margin-left:0;}
-  .nav a{padding:10px 5px;font-size:16px;}
-
-  .hero img,.hero video{width:100%;}
-
-  .portfolio-main{max-width:100%;margin-left:0;margin-right:0;}
-  .arrow-left{left:5px;}
-  .arrow-right{right:5px;}
-  .portfolio-thumbs{max-width:100%;gap:4px;}
-  .portfolio-thumbs img,.portfolio-thumbs video{height:60px;}
-
-  .home-text{font-size:16px;padding:5px 8px;}
-  #page-about .container,#page-contact .container{padding:20px 10px;}
-  .modal-content{max-width:95%;max-height:80%;}
-  .modal-arrow{font-size:30px;}
-}
+.modal { position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; z-index:100; }
+.modal.show { display:flex; }
+.modal-content { max-width:90%; max-height:90%; width:auto; height:auto; }
+.modal-close { position:absolute; top:10px; right:10px; font-size:30px; cursor:pointer; color:white; z-index:101; }
+.modal-arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:40px; color:white; cursor:pointer; z-index:101; user-select:none; }
+.modal-arrow-left { left:20px; }
+.modal-arrow-right { right:20px; }
 </style>
 </head>
-
 <body>
 
 <header class="header">
   <h1 class="site-title">CORDIE;</h1>
-
   <div class="nav-wrap">
     <nav class="nav">
       <ul>
@@ -112,54 +100,82 @@ main{padding-top:0;}
 </header>
 
 <main>
-
-<!-- HOME -->
-<section class="page active" id="page-home">
-  <section class="hero section">
-    <video id="homeVideo" autoplay loop playsinline controls>
-      <source src="video/0801.mp4" type="video/mp4">
-    </video>
-  </section>
-
-  <section class="home-text">
+  <!-- HOME -->
+  <section class="page active" id="page-home">
+    <section class="hero section">
+      <video id="homeVideo" autoplay loop playsinline controls>
+        <source src="video/0801.mp4" type="video/mp4">
+      </video>
+    </section>
+    <section class="home-text">
 [原風景]
-（省略 — そのまま）
+
+喧騒の中で日々を消費されている時、
+ふと、大事な何かを忘れているような気がした。
+
+お金とか仕事とか地位とか名誉とかそんなのじゃなくて、
+もっと自分の原点・核にある何か大事なものを。
+
+懐かしいような、どこか寂しいような、
+だけど優しく温かいそんな感じ。
+
+何かに追われるんじゃなくて、何かを夢中で追っていた日々を。
+何かを思い出すために。
+    </section>
   </section>
-</section>
 
-<!-- PORTFOLIO -->
-<section class="page" id="page-portfolio">
-  <section class="section">
-    <div class="portfolio-main">
-      <span class="arrow arrow-left">&#10094;</span>
-      <img id="mainImage" src="11111.png" style="display:block">
-      <video id="mainVideo" style="display:none" controls></video>
-      <span class="arrow arrow-right">&#10095;</span>
-    </div>
+  <!-- PORTFOLIO -->
+  <section class="page" id="page-portfolio">
+    <section class="section">
+      <div class="portfolio-main">
+        <span class="arrow arrow-left">&#10094;</span>
+        <img id="mainImage" src="photo/11111.png" style="display:block">
+        <video id="mainVideo" style="display:none" controls></video>
+        <span class="arrow arrow-right">&#10095;</span>
+      </div>
+      <div class="portfolio-thumbs" id="thumbContainer">
+        <!-- 画像サムネイル -->
+        <img src="photo/11111.png" data-type="image" data-src="photo/11111.png">
+        <img src="photo/22222.png" data-type="image" data-src="photo/22222.png">
+        <img src="photo/112233.png" data-type="image" data-src="photo/112233.png">
+        <img src="photo/5DE.JPG" data-type="image" data-src="photo/5DE.JPG">
+        <img src="photo/E12.JPG" data-type="image" data-src="photo/E12.JPG">
+        <img src="photo/enter1.png" data-type="image" data-src="photo/enter1.png">
+        <img src="photo/F96.JPG" data-type="image" data-src="photo/F96.JPG">
+        <img src="photo/insta1.jpg" data-type="image" data-src="photo/insta1.jpg">
+        <img src="photo/insta2.jpg" data-type="image" data-src="photo/insta2.jpg">
+        <img src="photo/insta3.jpg" data-type="image" data-src="photo/insta3.jpg">
+        <img src="photo/TOBIORI.png" data-type="image" data-src="photo/TOBIORI.png">
 
-    <div class="portfolio-thumbs" id="thumbContainer">
-      <!-- 画像 -->
-      <img src="11111.png" data-type="image" data-src="11111.png">
-      <!-- …（他の画像・動画サムネは現状のままでOK）… -->
-    </div>
+        <!-- 動画サムネイル -->
+        <video src="video/ティザー1_1.mp4" data-type="video" data-src="video/ティザー1_1.mp4" autoplay muted loop playsinline></video>
+        <video src="video/0916.MP4" data-type="video" data-src="video/0916.MP4" autoplay muted loop playsinline></video>
+        <video src="video/teaser4 2.MP4" data-type="video" data-src="video/teaser4 2.MP4" autoplay muted loop playsinline></video>
+        <video src="video/ティザー2.mp4" data-type="video" data-src="video/ティザー2.mp4" autoplay muted loop playsinline></video>
+        <video src="video/ティザー3.mp4" data-type="video" data-src="video/ティザー3.mp4" autoplay muted loop playsinline></video>
+        <video src="video/開演前ショートムービー001.mp4" data-type="video" data-src="video/開演前ショートムービー001.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </section>
   </section>
-</section>
 
-<!-- ABOUT -->
-<section class="page" id="page-about">
-  <div class="container">
-    <p>Started career as an Art/Creative Director in 2022...</p>
-  </div>
-</section>
+  <!-- ABOUT -->
+  <section class="page" id="page-about">
+    <section class="section">
+      <div class="container">
+        <p>Started career as an Art/Creative Director in 2022...</p>
+      </div>
+    </section>
+  </section>
 
-<!-- CONTACT -->
-<section class="page" id="page-contact">
-  <div class="container">
-    <p>Instagram: @y_kkk_0618</p>
-    <p>G-mail: cordieofficial469499@gmail.com</p>
-  </div>
-</section>
-
+  <!-- CONTACT -->
+  <section class="page" id="page-contact">
+    <section class="section">
+      <div class="container">
+        <p>Instagram: @y_kkk_0618</p>
+        <p>G-mail:cordieofficial469499@gmail.com</p>
+      </div>
+    </section>
+  </section>
 </main>
 
 <!-- モーダル -->
@@ -173,80 +189,90 @@ main{padding-top:0;}
 
 <script>
 // ページ切替
-const links=document.querySelectorAll("[data-go]");
-const pages=document.querySelectorAll(".page");
-const homeVideo=document.getElementById("homeVideo");
+const links = document.querySelectorAll("[data-go]");
+const pages = document.querySelectorAll(".page");
+const homeVideo = document.getElementById("homeVideo");
 
-links.forEach(l=>{
-  l.addEventListener("click",e=>{
+links.forEach(l => {
+  l.addEventListener("click", e => {
     e.preventDefault();
-    links.forEach(x=>x.classList.remove("active"));
+    links.forEach(x => x.classList.remove("active"));
     l.classList.add("active");
-    links.forEach(x=>x.style.color=x.classList.contains("active")?"black":"#aaa");
-    const t=l.dataset.go;
-    pages.forEach(p=>p.classList.remove("active"));
+    links.forEach(x => {
+      x.style.color = (x.classList.contains("active")) ? 'black':'#aaa';
+      x.style.fontWeight = '400';
+    });
+    const t = l.dataset.go;
+    pages.forEach(p => p.classList.remove("active"));
     document.getElementById(`page-${t}`).classList.add("active");
-    window.scrollTo({top:0,behavior:"smooth"});
-    if(t!=="home"){homeVideo.pause();homeVideo.currentTime=0;}else{homeVideo.play();}
+    window.scrollTo({top:0, behavior:"smooth"});
+
+    if(t !== "home") { homeVideo.pause(); homeVideo.currentTime = 0; } else { homeVideo.play(); }
   });
 });
 
-// Portfolio main / thumbs
-const mainImg=document.getElementById("mainImage");
-const mainVid=document.getElementById("mainVideo");
-const thumbs=document.querySelectorAll("#thumbContainer img,#thumbContainer video");
-let currentIndex=0;
+// Portfolio
+const mainImg = document.getElementById("mainImage");
+const mainVid = document.getElementById("mainVideo");
+const thumbs = document.querySelectorAll("#thumbContainer img, #thumbContainer video");
+let currentIndex = 0;
 
-function showMain(i){
-  if(i<0) i=thumbs.length-1;
-  if(i>=thumbs.length) i=0;
-  currentIndex=i;
-  const t=thumbs[i];
-  if(t.dataset.type==="image"){
-    mainVid.style.display="none";
-    mainImg.style.display="block";
-    mainImg.src=t.dataset.src;
-  }else{
-    mainImg.style.display="none";
-    mainVid.style.display="block";
-    mainVid.src=t.dataset.src;
+function showMain(index){
+  if(index < 0) index = thumbs.length - 1;
+  if(index >= thumbs.length) index = 0;
+  currentIndex = index;
+  const item = thumbs[index];
+  if(item.dataset.type === "image"){
+    mainImg.src = item.dataset.src;
+    mainImg.style.display = "block";
+    mainVid.style.display = "none";
+    mainVid.pause(); mainVid.currentTime = 0;
+  } else {
+    mainVid.src = item.dataset.src;
+    mainVid.style.display = "block";
+    mainVid.play();
+    mainImg.style.display = "none";
   }
 }
 
-thumbs.forEach((t,i)=>t.addEventListener("click",()=>showMain(i)));
-document.querySelector(".arrow-left").onclick=()=>showMain(currentIndex-1);
-document.querySelector(".arrow-right").onclick=()=>showMain(currentIndex+1);
+document.querySelector(".arrow-left").addEventListener("click", () => showMain(currentIndex - 1));
+document.querySelector(".arrow-right").addEventListener("click", () => showMain(currentIndex + 1));
 
 // モーダル
-const modal=document.getElementById("modal");
-const modalImg=document.getElementById("modalImage");
-const modalVid=document.getElementById("modalVideo");
-
-document.querySelector(".portfolio-main").addEventListener("click",()=>{
+const modal = document.getElementById("modal");
+const modalImage = document.getElementById("modalImage");
+const modalVideo = document.getElementById("modalVideo");
+const modalClose = document.getElementById("modalClose");
+const modalPrev = document.getElementById("modalPrev");
+const modalNext = document.getElementById("modalNext");
+// メイン画像・動画もクリックでモーダル表示
+mainImg.addEventListener("click", () => openModal(currentIndex));
+mainVid.addEventListener("click", () => openModal(currentIndex));
+function openModal(index){
   modal.classList.add("show");
-  if(mainImg.style.display==="block"){
-    modalImg.style.display="block";modalVid.style.display="none";
-    modalImg.src=mainImg.src;
+  const item = thumbs[index];
+  if(item.dataset.type === "image"){
+    modalImage.src = item.dataset.src;
+    modalImage.style.display = "block";
+    modalVideo.style.display = "none";
+    modalVideo.pause(); modalVideo.currentTime = 0;
   } else {
-    modalVid.style.display="block";modalImg.style.display="none";
-    modalVid.src=mainVid.src;
+    modalVideo.src = item.dataset.src;
+    modalVideo.style.display = "block";
+    modalVideo.play();
+    modalImage.style.display = "none";
   }
-});
-document.getElementById("modalClose").onclick=()=>modal.classList.remove("show");
-document.getElementById("modalPrev").onclick=()=>showMain(currentIndex-1);
-document.getElementById("modalNext").onclick=()=>showMain(currentIndex+1);
+  currentIndex = index;
+}
 
-// スワイプ（スマホ）
-let startX=0,endX=0;
-const mainWrap=document.querySelector(".portfolio-main");
-mainWrap.addEventListener("touchstart",e=>startX=e.changedTouches[0].screenX);
-mainWrap.addEventListener("touchend",e=>{
-  endX=e.changedTouches[0].screenX;
-  const d=endX-startX;
-  if(d<-50) showMain(currentIndex+1);
-  if(d>50)  showMain(currentIndex-1);
+thumbs.forEach((thumb, i) => thumb.addEventListener("click", () => openModal(i)));
+modalClose.addEventListener("click", () => {
+  modal.classList.remove("show");
+  modalVideo.pause(); modalVideo.currentTime = 0;
 });
+modal.addEventListener("click", e => { if(e.target === modal){ modal.classList.remove("show"); modalVideo.pause(); modalVideo.currentTime = 0; } });
+modalPrev.addEventListener("click", () => openModal((currentIndex - 1 + thumbs.length) % thumbs.length));
+modalNext.addEventListener("click", () => openModal((currentIndex + 1) % thumbs.length));
 </script>
-
 </body>
 </html>
