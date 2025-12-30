@@ -280,6 +280,48 @@ modalNext.addEventListener('click',()=>openModal((currentIndex+1)%thumbs.length)
 
 // 初期表示
 showMain(0);
+// === PATCH: thumbnail modal + arrows (YouTube 再生対応) ===
+(function(){
+  const thumbs = document.querySelectorAll('#thumbContainer img');
+  const modal = document.getElementById('modal');
+  const modalImage = document.getElementById('modalImage');
+  const modalVideo = document.getElementById('modalVideo');
+  const modalClose = document.getElementById('modalClose');
+  const modalPrev = document.getElementById('modalPrev');
+  const modalNext = document.getElementById('modalNext');
+  let currentIndex = 0;
+
+  function openByIndex(idx){
+    if(idx < 0) idx = thumbs.length-1;
+    if(idx >= thumbs.length) idx = 0;
+    currentIndex = idx;
+    const t = thumbs[idx];
+    const type = t.dataset.type;
+    const src = t.dataset.src;
+    if(type === 'image'){
+      modalImage.src = src;
+      modalImage.style.display = 'block';
+      modalVideo.style.display = 'none';
+      modalVideo.src = '';
+    } else {
+      modalVideo.src = src + '?autoplay=1';
+      modalVideo.style.display = 'block';
+      modalImage.style.display = 'none';
+    }
+    modal.classList.add('show');
+  }
+
+  thumbs.forEach((t,i)=>{
+    t.addEventListener('click',()=>openByIndex(i));
+  });
+
+  modalPrev.addEventListener('click',()=>openByIndex(currentIndex-1));
+  modalNext.addEventListener('click',()=>openByIndex(currentIndex+1));
+  modalClose.addEventListener('click',()=>{
+    modal.classList.remove('show');
+    modalVideo.src='';
+  });
+})();
 </script>
 <script>
 // -------- Lightbox for Image + YouTube --------
