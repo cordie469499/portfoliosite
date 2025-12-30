@@ -4,139 +4,165 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CORDIE;</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;400;500&display=swap" rel="stylesheet">
 <style>
-  body {margin:0;font-family:Arial, Helvetica, sans-serif;background:#0a0a0a;color:#fff;}
-  header{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;
-    padding:14px 18px;background:#0a0a0a;z-index:10;}
-  header h1{margin:0;font-size:18px;letter-spacing:.15em}
-  nav a{color:#fff;margin-left:18px;text-decoration:none;font-size:14px}
-  main{padding-top:70px}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Bodoni Moda",serif;color:#000;background:#fff;line-height:1.7;}
+img,video,iframe{display:block;max-width:100%;height:auto;}
+a{text-decoration:none;color:inherit;}
 
-  .page{display:none;min-height:70vh;padding:24px}
-  .page.active{display:block}
+.container{max-width:900px;margin:0 auto;padding:0 24px;}
+.header{width:100%;background:#fff;}
+.site-title{font-size:44px;letter-spacing:.04em;margin:22px 0 18px;padding:0 24px;color:#000;}
+.nav-wrap{position:relative;max-width:900px;margin:0 auto;padding:0 24px;}
+.nav{display:flex;justify-content:center;}
+.nav ul{display:flex;gap:40px;list-style:none;}
+.nav a{display:block;padding:14px 6px;font-size:17px;font-weight:400;color:#aaa;transition:.2s;}
+.nav a.active{color:#000;}
 
-  .title{font-size:26px;margin-bottom:8px}
-  .desc{opacity:.75;margin-bottom:16px}
+.hero{display:flex;justify-content:center;margin:2.5mm 0;}
+.home-text{text-align:center;padding:5px;max-width:800px;margin:0 auto;font-size:18px;line-height:1.8;color:#000;white-space:pre-line;}
 
-  .portfolio-thumbs{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-    gap:10px;
-  }
-  .portfolio-thumbs img{
-    width:100%;height:160px;object-fit:cover;cursor:pointer;border-radius:12px;
-  }
+.portfolio-main{position:relative;display:flex;justify-content:center;margin:2.5mm auto;max-width:900px;}
+.portfolio-main img,#mainVideo{display:block;max-width:100%;height:auto;cursor:pointer;}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:30px;cursor:pointer;color:gray;font-weight:bold;user-select:none;z-index:50;}
+.arrow-left{left:-40px;}
+.arrow-right{right:-40px;}
 
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.9);
-    display:none;align-items:center;justify-content:center;z-index:100}
-  .modal.open{display:flex}
-  .modal-content{max-width:92%;max-height:88%;position:relative}
-  .modal img,.modal iframe{max-width:100%;max-height:100%;border:0;border-radius:14px}
-  .close-btn{position:absolute;top:-14px;right:-8px;font-size:32px;cursor:pointer}
+.portfolio-thumbs{display:flex;gap:5px;overflow-x:auto;margin-top:5px;max-width:900px;margin-left:auto;margin-right:auto;}
+.portfolio-thumbs img,.portfolio-thumbs video{height:80px;width:auto;cursor:pointer;flex-shrink:0;object-fit:cover;}
+
+.page{display:none;}
+.page.active{display:block;}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;}
+.modal.show{display:flex;}
+.modal-content{max-width:90%;max-height:90%;}
+.modal-close{position:absolute;top:10px;right:10px;font-size:30px;cursor:pointer;color:#fff;z-index:101;}
 </style>
 </head>
-
 <body>
-<header>
-  <h1>CORDIE;</h1>
-  <nav>
-    <a href="#" data-target="home">Home</a>
-    <a href="#" data-target="portfolio">Portfolio</a>
-  </nav>
+<header class="header">
+  <h1 class="site-title">CORDIE;</h1>
+  <div class="nav-wrap">
+    <nav class="nav">
+      <ul>
+        <li><a href="#" class="active" data-go="home">Home</a></li>
+        <li><a href="#" data-go="portfolio">Portfolio</a></li>
+        <li><a href="#" data-go="about">About</a></li>
+        <li><a href="#" data-go="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <main>
-
   <section class="page active" id="page-home">
-    <h2 class="title">Home</h2>
-    <p>ようこそ。ここでは制作した映像・作品をまとめています。</p>
+    <section class="hero section">
+      <img src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
+    </section>
+    <section class="home-text">[原風景]
+
+喧騒の中で日々を消費されている時、
+ふと、大事な何かを忘れているような気がした。
+</section>
   </section>
 
   <section class="page" id="page-portfolio">
-    <h2 class="title">Portfolio</h2>
-    <p class="desc">サムネイルをクリックすると拡大・再生されます。</p>
+    <section class="section">
+      <div class="portfolio-thumbs" id="thumbContainer">
+        <!-- Images -->
+        <img src="11111.png" data-type="image" data-src="11111.png">
+        <img src="22222.png" data-type="image" data-src="22222.png">
+        <img src="112233.png" data-type="image" data-src="112233.png">
+        <img src="5DE.JPG" data-type="image" data-src="5DE.JPG">
+        <img src="E12.JPG" data-type="image" data-src="E12.JPG">
 
-    <div class="portfolio-thumbs" id="thumbContainer">
+        <!-- YouTube -->
+        <img src="https://img.youtube.com/vi/lWCJ4D3CkvY/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/lWCJ4D3CkvY">
+        <img src="https://img.youtube.com/vi/6IrrJPv8wAg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/6IrrJPv8wAg">
+        <img src="https://img.youtube.com/vi/mLZKyQDoo0Y/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/mLZKyQDoo0Y">
+      </div>
+    </section>
+  </section>
 
-      <!-- 画像たち -->
-      <img src="11111.png"  data-type="image" data-src="11111.png">
-      <img src="22222.png"  data-type="image" data-src="22222.png">
-      <img src="112233.png" data-type="image" data-src="112233.png">
-      <img src="5DE.JPG"    data-type="image" data-src="5DE.JPG">
-      <img src="E12.JPG"    data-type="image" data-src="E12.JPG">
-      <img src="enter1.png" data-type="image" data-src="enter1.png">
-      <img src="F96.JPG"    data-type="image" data-src="F96.JPG">
-      <img src="insta1.jpg" data-type="image" data-src="insta1.jpg">
-      <img src="insta2.jpg" data-type="image" data-src="insta2.jpg">
-      <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
-      <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
-
-      <!-- YouTube（ギャラリー内） -->
-      <img
-        src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg"
-        data-type="video"
-        data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
+  <section class="page" id="page-about">
+    <div class="container">
+      <p>Started career as an Art/Creative Director in 2022...</p>
     </div>
   </section>
 
+  <section class="page" id="page-contact">
+    <div class="container">
+      <p>Instagram: @y_kkk_0618</p>
+      <p>G-mail: cordieofficial469499@gmail.com</p>
+    </div>
+  </section>
 </main>
 
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close-btn" id="closeModal">&times;</span>
-    <img id="modalImg" style="display:none">
-    <iframe id="modalVideo"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-      style="display:none">
-    </iframe>
-  </div>
+  <span class="modal-close" id="modalClose">&times;</span>
+  <iframe class="modal-content" id="modalFrame" allowfullscreen style="display:none"></iframe>
 </div>
 
 <script>
-document.querySelectorAll("nav a").forEach(a=>{
-  a.addEventListener("click",e=>{
+// page switch
+const links=document.querySelectorAll('[data-go]');
+const pages=document.querySelectorAll('.page');
+
+links.forEach(l=>{
+  l.addEventListener('click',e=>{
     e.preventDefault();
-    const t=a.dataset.target;
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    document.getElementById("page-"+t).classList.add("active");
+    links.forEach(x=>x.classList.remove('active'));
+    l.classList.add('active');
+    pages.forEach(p=>p.classList.remove('active'));
+    const page=document.getElementById('page-' + l.dataset.go);
+    if(page) page.classList.add('active');
   });
 });
 
-const modal=document.getElementById("modal");
-const modalImg=document.getElementById("modalImg");
-const modalVideo=document.getElementById("modalVideo");
+// modal for images + YouTube
+const thumbs = document.querySelectorAll('#thumbContainer img');
+const modal = document.getElementById('modal');
+const modalFrame = document.getElementById('modalFrame');
 
-document.getElementById("thumbContainer").addEventListener("click",e=>{
-  if(e.target.tagName!=="IMG") return;
+thumbs.forEach(t=>{
+  t.addEventListener('click',()=>{
+    const type = t.dataset.type;
+    const src  = t.dataset.src;
+    modal.classList.add('show');
 
-  const type=e.target.dataset.type;
-  const src=e.target.dataset.src;
-
-  modal.classList.add("open");
-
-  if(type==="image"){
-    modalVideo.style.display="none";
-    modalVideo.src="";
-    modalImg.src=src;
-    modalImg.style.display="block";
-  }else{
-    modalImg.style.display="none";
-    modalImg.src="";
-    modalVideo.src=src+"?autoplay=1&rel=0&playsinline=1";
-    modalVideo.style.display="block";
-  }
+    if(type === 'image'){
+      modalFrame.style.display='none';
+      modalFrame.src='';
+      t.style.cursor='default';
+      const img = document.createElement('img');
+      img.src = src;
+      img.style.maxWidth='90vw';
+      img.style.maxHeight='90vh';
+      if(modal.querySelector('img')) modal.querySelector('img').remove();
+      modal.appendChild(img);
+    } else if(type === 'video'){
+      if(modal.querySelector('img')) modal.querySelector('img').remove();
+      modalFrame.style.display='block';
+      modalFrame.src = src + '?autoplay=1&rel=0';
+    }
+  });
 });
 
-function closeModal(){
-  modal.classList.remove("open");
-  modalImg.src="";
-  modalVideo.src="";
-}
-document.getElementById("closeModal").addEventListener("click",closeModal);
-modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
-</script>
+document.getElementById('modalClose').addEventListener('click',()=>{
+  modal.classList.remove('show');
+  modalFrame.src='';
+  if(modal.querySelector('img')) modal.querySelector('img').remove();
+});
 
+modal.addEventListener('click',e=>{
+  if(e.target===modal){
+    modal.classList.remove('show');
+    modalFrame.src='';
+    if(modal.querySelector('img')) modal.querySelector('img').remove();
+  }
+});
+</script>
 </body>
 </html>
