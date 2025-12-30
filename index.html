@@ -123,18 +123,26 @@ main{padding-top:0;}
       </div>
 
       <div class="portfolio-thumbs" id="thumbContainer">
-        <img src="11111.png" data-type="image" data-src="11111.png">
-        <img src="22222.png" data-type="image" data-src="22222.png">
-        <img src="112233.png" data-type="image" data-src="112233.png">
-        <img src="5DE.JPG" data-type="image" data-src="5DE.JPG">
-        <img src="E12.JPG" data-type="image" data-src="E12.JPG">
-        <img src="enter1.png" data-type="image" data-src="enter1.png">
-        <img src="F96.JPG" data-type="image" data-src="F96.JPG">
-        <img src="insta1.jpg" data-type="image" data-src="insta1.jpg">
-        <img src="insta2.jpg" data-type="image" data-src="insta2.jpg">
-        <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
-        <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
-      </div>
+  <!-- Images -->
+  <img src="11111.png" data-type="image" data-src="11111.png">
+  <img src="22222.png" data-type="image" data-src="22222.png">
+  <img src="112233.png" data-type="image" data-src="112233.png">
+  <img src="5DE.JPG" data-type="image" data-src="5DE.JPG">
+  <img src="E12.JPG" data-type="image" data-src="E12.JPG">
+  <img src="enter1.png" data-type="image" data-src="enter1.png">
+  <img src="F96.JPG" data-type="image" data-src="F96.JPG">
+  <img src="insta1.jpg" data-type="image" data-src="insta1.jpg">
+  <img src="insta2.jpg" data-type="image" data-src="insta2.jpg">
+  <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
+  <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
+
+  <!-- YouTube (thumbnail + play in modal) → あなたの動画IDに差し替え -->
+  <img src="https://img.youtube.com/vi/lWCJ4D3CkvY/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/lWCJ4D3CkvY">
+  <img src="https://img.youtube.com/vi/6IrrJPv8wAg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/6IrrJPv8wAg">
+  <img src="https://img.youtube.com/vi/mLZKyQDoo0Y/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/mLZKyQDoo0Y">
+  <img src="https://img.youtube.com/vi/khdmv9MIlUg/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/khdmv9MIlUg">
+  <img src="https://img.youtube.com/vi/9W7SKpAJ6B0/hqdefault.jpg" data-type="video" data-src="https://www.youtube.com/embed/9W7SKpAJ6B0">
+</div>
 
       <section id="portfolio-videos" class="section">
         <h2 class="title">Portfolio</h2>
@@ -260,6 +268,40 @@ modalClose.addEventListener('click',()=>modal.classList.remove('show'));
 modalPrev.addEventListener('click',()=>openModal(currentIndex-1));
 modalNext.addEventListener('click',()=>openModal(currentIndex+1));
 modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show');});
+</script>
+<script>
+// -------- Lightbox for Image + YouTube --------
+const thumbs = document.querySelectorAll('#thumbContainer img');
+const modal      = document.getElementById('modal');
+const modalImg   = document.getElementById('modalImage');
+const modalVideo = document.getElementById('modalVideo');
+
+thumbs.forEach(t => {
+  t.addEventListener('click', () => {
+    const type = t.dataset.type;
+    const src  = t.dataset.src;
+    modal.classList.add('show');
+
+    if (type === 'image') {
+      modalVideo.src = '';
+      modalVideo.classList.add('hidden');
+      modalImg.classList.remove('hidden');
+      modalImg.src = src;
+    } else if (type === 'video') {
+      modalImg.src = '';
+      modalImg.classList.add('hidden');
+      modalVideo.classList.remove('hidden');
+      modalVideo.src = `${src}?autoplay=1`;
+    }
+  });
+});
+
+modal.addEventListener('click', e => {
+  if (e.target === modal) {
+    modal.classList.remove('show');
+    modalVideo.src = '';
+  }
+});
 </script>
 </body>
 </html>
