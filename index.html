@@ -191,7 +191,30 @@ const modalClose=document.getElementById("modalClose");
 const modalPrev=document.getElementById("modalPrev");
 const modalNext=document.getElementById("modalNext");
 
-function openModal(i){showMain(i);modal.classList.add("show");if(thumbs[i].dataset.type==="image"){modalImage.src=thumbs[i].dataset.src;modalImage.style.display="block";modalVideo.style.display="none";}else{modalVideo.src=thumbs[i].dataset.src;modalVideo.style.display="block";modalImage.style.display="none";modalVideo.play();}}
+function openModal(i){
+  showMain(i);
+  modal.classList.add("show");
+  const type=thumbs[i].dataset.type;
+  const src=thumbs[i].dataset.src;
+
+  // reset
+  modalImage.style.display="none";
+  modalVideo.style.display="none"; modalVideo.pause(); modalVideo.currentTime=0;
+  const modalYT=document.getElementById("modalYT");
+  modalYT.style.display="none"; modalYT.src="";
+
+  if(type==="image"){
+    modalImage.src=src;
+    modalImage.style.display="block";
+  }else if(type==="video"){
+    modalVideo.src=src;
+    modalVideo.style.display="block";
+    modalVideo.play();
+  }else if(type==="youtube"){
+    modalYT.src=src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
+    modalYT.style.display="block";
+  }
+}
 
 mainImg.addEventListener("click",()=>openModal(currentIndex));
 mainVid.addEventListener("click",()=>openModal(currentIndex));
