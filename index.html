@@ -51,6 +51,24 @@ main { padding-top:0; }
 .modal-arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:40px; color:white; cursor:pointer; z-index:101; user-select:none; }
 .modal-arrow-left { left:20px; }
 .modal-arrow-right { right:20px; }
+
+/* スマホ対応 */
+@media screen and (max-width: 768px) {
+  .container { padding-left:10px; padding-right:10px; }
+  .site-title { font-size:28px; padding-left:10px; }
+  .nav-wrap { padding-left:10px; padding-right:10px; }
+  .nav ul { flex-direction: column; width:100%; margin-left:0; }
+  .nav a { padding:10px 5px; font-size:16px; }
+  .hero img, .hero video { width:100%; }
+  .portfolio-main { margin-left:0; margin-right:0; max-width:100%; }
+  .arrow-left, .arrow-right { font-size:24px; left:5px; right:5px; }
+  .portfolio-thumbs { gap:4px; max-width:100%; margin-left:0; margin-right:0; justify-content:flex-start; }
+  .portfolio-thumbs img, .portfolio-thumbs video { height:60px; }
+  .home-text { font-size:16px; padding:5px 8px; }
+  #page-about .container, #page-contact .container { padding:20px 10px; font-size:16px; }
+  .modal-content { max-width:95%; max-height:80%; }
+  .modal-arrow { font-size:30px; }
+}
 </style>
 </head>
 <body>
@@ -117,13 +135,10 @@ main { padding-top:0; }
         <img src="insta3.jpg" data-type="image" data-src="insta3.jpg">
         <img src="TOBIORI.png" data-type="image" data-src="TOBIORI.png">
 
-        <!-- 動画サムネイル（フォルダはそのまま） -->
+        <!-- 動画サムネイル -->
         <video src="video/ティザー1_1.mp4" data-type="video" data-src="video/ティザー1_1.mp4" autoplay muted loop playsinline></video>
         <video src="video/0916.MP4" data-type="video" data-src="video/0916.MP4" autoplay muted loop playsinline></video>
         <video src="video/teaser4 2.MP4" data-type="video" data-src="video/teaser4 2.MP4" autoplay muted loop playsinline></video>
-        <video src="video/ティザー2.mp4" data-type="video" data-src="video/ティザー2.mp4" autoplay muted loop playsinline></video>
-        <video src="video/ティザー3.mp4" data-type="video" data-src="video/ティザー3.mp4" autoplay muted loop playsinline></video>
-        <video src="video/開演前ショートムービー001.mp4" data-type="video" data-src="video/開演前ショートムービー001.mp4" autoplay muted loop playsinline></video>
       </div>
     </section>
   </section>
@@ -185,71 +200,7 @@ const mainImg = document.getElementById("mainImage");
 const mainVid = document.getElementById("mainVideo");
 const thumbs = document.querySelectorAll("#thumbContainer img, #thumbContainer video");
 let currentIndex = 0;
-<style>
-/* 既存のスタイルはそのまま */
 
-@media screen and (max-width: 768px) {
-  .container {
-    padding-left:10px;
-    padding-right:10px;
-  }
-  .site-title {
-    font-size:28px;
-    padding-left:10px;
-  }
-  .nav-wrap {
-    padding-left:10px;
-    padding-right:10px;
-  }
-  .nav ul {
-    flex-direction: column;
-    width:100%;
-    margin-left:0;
-  }
-  .nav a {
-    padding:10px 5px;
-    font-size:16px;
-  }
-  .hero img, .hero video {
-    width:100%;
-  }
-  .portfolio-main {
-    margin-left:0;
-    margin-right:0;
-    max-width:100%;
-  }
-  .arrow-left, .arrow-right {
-    font-size:24px;
-    left:5px;
-    right:5px;
-  }
-  .portfolio-thumbs {
-    gap:4px;
-    max-width:100%;
-    margin-left:0;
-    margin-right:0;
-    justify-content:flex-start;
-  }
-  .portfolio-thumbs img, .portfolio-thumbs video {
-    height:60px;
-  }
-  .home-text {
-    font-size:16px;
-    padding:5px 8px;
-  }
-  #page-about .container, #page-contact .container {
-    padding:20px 10px;
-    font-size:16px;
-  }
-  .modal-content {
-    max-width:95%;
-    max-height:80%;
-  }
-  .modal-arrow {
-    font-size:30px;
-  }
-}
-</style>
 function showMain(index){
   if(index < 0) index = thumbs.length - 1;
   if(index >= thumbs.length) index = 0;
@@ -278,8 +229,7 @@ const modalVideo = document.getElementById("modalVideo");
 const modalClose = document.getElementById("modalClose");
 const modalPrev = document.getElementById("modalPrev");
 const modalNext = document.getElementById("modalNext");
-mainImg.addEventListener("click", () => openModal(currentIndex));
-mainVid.addEventListener("click", () => openModal(currentIndex));
+
 function openModal(index){
   modal.classList.add("show");
   const item = thumbs[index];
@@ -293,8 +243,22 @@ function openModal(index){
     modalVideo.style.display = "block";
     modalVideo.play();
     modalImage.style.display = "none";
-  <script>
-// スワイプでPortfolio切替（スマホ対応）
+  }
+  currentIndex = index;
+}
+
+mainImg.addEventListener("click", () => openModal(currentIndex));
+mainVid.addEventListener("click", () => openModal(currentIndex));
+thumbs.forEach((thumb, i) => thumb.addEventListener("click", () => openModal(i)));
+modalClose.addEventListener("click", () => {
+  modal.classList.remove("show");
+  modalVideo.pause(); modalVideo.currentTime = 0;
+});
+modal.addEventListener("click", e => { if(e.target === modal){ modal.classList.remove("show"); modalVideo.pause(); modalVideo.currentTime = 0; } });
+modalPrev.addEventListener("click", () => openModal((currentIndex - 1 + thumbs.length) % thumbs.length));
+modalNext.addEventListener("click", () => openModal((currentIndex + 1) % thumbs.length));
+
+// スマホ用スワイプ
 let touchStartX = 0;
 let touchEndX = 0;
 const mainWrapper = document.querySelector(".portfolio-main");
@@ -305,32 +269,11 @@ mainWrapper.addEventListener("touchstart", e => {
 
 mainWrapper.addEventListener("touchend", e => {
   touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
+  const threshold = 50;
+  if(touchEndX < touchStartX - threshold) showMain(currentIndex + 1);
+  if(touchEndX > touchStartX + threshold) showMain(currentIndex - 1);
 }, false);
 
-function handleSwipe() {
-  const threshold = 50; // スワイプ判定の最小距離(px)
-  if(touchEndX < touchStartX - threshold){
-    // 左スワイプ → 次の画像
-    showMain(currentIndex + 1);
-  }
-  if(touchEndX > touchStartX + threshold){
-    // 右スワイプ → 前の画像
-    showMain(currentIndex - 1);
-  }
-}
-</script>}
-  currentIndex = index;
-}
-
-thumbs.forEach((thumb, i) => thumb.addEventListener("click", () => openModal(i)));
-modalClose.addEventListener("click", () => {
-  modal.classList.remove("show");
-  modalVideo.pause(); modalVideo.currentTime = 0;
-});
-modal.addEventListener("click", e => { if(e.target === modal){ modal.classList.remove("show"); modalVideo.pause(); modalVideo.currentTime = 0; } });
-modalPrev.addEventListener("click", () => openModal((currentIndex - 1 + thumbs.length) % thumbs.length));
-modalNext.addEventListener("click", () => openModal((currentIndex + 1) % thumbs.length));
 </script>
 </body>
 </html>
