@@ -185,7 +185,7 @@ main{padding-top:0;}
 </div>
 
 <script>
-// page switch (FIX: id名の組み立てを正しく)
+// page switch
 const links=document.querySelectorAll('[data-go]');
 const pages=document.querySelectorAll('.page');
 const homeVideo=document.getElementById('homeVideo');
@@ -199,7 +199,7 @@ links.forEach(l=>{
 
     const t=l.dataset.go; // home | portfolio | about | contact
     pages.forEach(p=>p.classList.remove('active'));
-    const page=document.getElementById('page-' + t); // ← ここを修正
+    const page=document.getElementById('page-' + t);
     if(page) page.classList.add('active');
 
     window.scrollTo({top:0,behavior:'smooth'});
@@ -207,10 +207,10 @@ links.forEach(l=>{
   });
 });
 
-// portfolio gallery
+// portfolio gallery (images + YouTube in the same gallery)
 const mainImg=document.getElementById('mainImage');
 const mainVid=document.getElementById('mainVideo');
-const thumbs=document.querySelectorAll('#thumbContainer img,#thumbContainer video');
+const thumbs=document.querySelectorAll('#thumbContainer img, #thumbContainer video');
 let currentIndex=0;
 
 function showMain(i){
@@ -218,56 +218,68 @@ function showMain(i){
   if(i>=thumbs.length) i=0;
   currentIndex=i;
   const item=thumbs[i];
+
   if(item.dataset.type==='image'){
-    mainImg.src=item.dataset.src;
-    mainImg.style.display='block';
     mainVid.style.display='none';
-    mainVid.pause();
-    mainVid.currentTime=0;
-  }else{
-    mainVid.src=item.dataset.src;
-    mainVid.style.display='block';
-    mainVid.play();
+    mainVid.pause?.();
+    mainVid.src='';
+    mainImg.style.display='block';
+    mainImg.src=item.dataset.src;
+  }else{ // YouTube (embed)
     mainImg.style.display='none';
+    mainVid.style.display='block';
+    mainVid.src=item.dataset.src + (item.dataset.src.includes('?')?'&':'?') + 'autoplay=1&mute=1';
   }
 }
 
+thumbs.forEach((t,i)=>{
+  t.addEventListener('click',()=>showMain(i));
+});
+
 document.querySelector('.arrow-left').addEventListener('click',()=>showMain(currentIndex-1));
 document.querySelector('.arrow-right').addEventListener('click',()=>showMain(currentIndex+1));
-thumbs.forEach((t,idx)=>t.addEventListener('click',()=>showMain(idx)));
 
-// modal (簡易版 — 画像/動画の表示)
+// modal (tap to enlarge)
 const modal=document.getElementById('modal');
-const modalImage=document.getElementById('modalImage');
+const modalImg=document.getElementById('modalImage');
 const modalVideo=document.getElementById('modalVideo');
 const modalClose=document.getElementById('modalClose');
 const modalPrev=document.getElementById('modalPrev');
 const modalNext=document.getElementById('modalNext');
 
 function openModal(i){
-  showMain(i);
+  currentIndex=i;
+  const item=thumbs[i];
   modal.classList.add('show');
 
-  const t=thumbs[i].dataset.type;
-  modalImage.style.display='none';
-  modalVideo.style.display='none';
-
-  if(t==='image'){
-    modalImage.src=thumbs[i].dataset.src;
-    modalImage.style.display='block';
-  } else {
-    modalVideo.src=thumbs[i].dataset.src;
+  if(item.dataset.type==='image'){
+    modalVideo.style.display='none';
+    modalVideo.src='';
+    modalImg.style.display='block';
+    modalImg.src=item.dataset.src;
+  }else{
+    modalImg.style.display='none';
     modalVideo.style.display='block';
-    modalVideo.play();
+    modalVideo.src=item.dataset.src + (item.dataset.src.includes('?')?'&':'?') + 'autoplay=1';
   }
 }
 
-mainImg.addEventListener('click',()=>openModal(currentIndex));
-mainVid.addEventListener('click',()=>openModal(currentIndex));
-modalClose.addEventListener('click',()=>modal.classList.remove('show'));
-modalPrev.addEventListener('click',()=>openModal(currentIndex-1));
-modalNext.addEventListener('click',()=>openModal(currentIndex+1));
-modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show');});
+thumbs.forEach((t,i)=>{
+  t.addEventListener('dblclick',()=>openModal(i));
+});
+
+function closeModal(){
+  modal.classList.remove('show');
+  modalVideo.src='';
+}
+
+modalClose.addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal) closeModal();});
+modalPrev.addEventListener('click',()=>openModal((currentIndex-1+thumbs.length)%thumbs.length));
+modalNext.addEventListener('click',()=>openModal((currentIndex+1)%thumbs.length));
+
+// 初期表示
+showMain(0);
 </script>
 <script>
 // -------- Lightbox for Image + YouTube --------
